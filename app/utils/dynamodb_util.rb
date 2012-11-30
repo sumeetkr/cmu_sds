@@ -1,7 +1,7 @@
 require "aws"
 AWS.config(
     access_key_id: "AKIAIPTXJSGSYF2M6WUQ",
-    secret_access_key: "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"
+    secret_access_key: "9eMyhPqgtzyppo8URepTwPPZAOntIjTVYDox2Y+F"
 )
 
 # create a table (10 read and 5 write capacity units) with the
@@ -10,6 +10,7 @@ DB = AWS::DynamoDB.new
 TABLES = {}
 
 sensor_readings_table_name = "SensorReadingV2"
+
 {
     sensor_readings_table_name => {
         hash_key: {id: :string},
@@ -27,8 +28,12 @@ sensor_readings_table_name = "SensorReadingV2"
   end
 end
 
+print TABLES[sensor_readings_table_name]
+
 # add an item
-item = TABLES["sensor_readings_table_name"].items.create('id' => '12333', 'foo' => 'bar')
+item = TABLES[sensor_readings_table_name].items.create('id' => '12333', 'timestamp'=> '123456', 'foo' => 'bar')
+
+puts item
 # add attributes to an item
 item.attributes.add 'category' => %w(demo), 'tags' => %w(sample item)
 

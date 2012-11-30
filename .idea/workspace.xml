@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b29e334f-bb18-4a7d-8d60-324c5b077f1d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils/dynamodb_util.rb" afterPath="$PROJECT_DIR$/app/utils/dynamodb_util.rb" />
     </list>
     <ignored path="cmu_sds.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,10 +21,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Gemfile" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="13" selection-start="825" selection-end="825" vertical-scroll-proportion="0.6691176">
+            <state line="42" column="13" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -50,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dynamodb_util.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="dynamodb_util.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/utils/dynamodb_util.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="26" selection-end="134" vertical-scroll-proportion="0.0">
+            <state line="36" column="27" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.6985294">
               <folding />
             </state>
           </provider>
@@ -119,10 +117,10 @@
       <list>
         <option value="$PROJECT_DIR$/lib/tasks/deploy.rake" />
         <option value="$PROJECT_DIR$/lib/tasks/sample_data.rake" />
-        <option value="$PROJECT_DIR$/app/utils/dynamodb_util.rb" />
         <option value="$PROJECT_DIR$/config/initializers/aws.rb" />
         <option value="$PROJECT_DIR$/config/aws.yml" />
         <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/app/utils/dynamodb_util.rb" />
       </list>
     </option>
   </component>
@@ -772,13 +770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/utils/dynamodb_util.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="26" selection-end="134" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/aws.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="63" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
@@ -788,7 +779,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="13" selection-start="825" selection-end="825" vertical-scroll-proportion="0.6691176">
+        <state line="42" column="13" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils/dynamodb_util.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="27" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.6985294">
           <folding />
         </state>
       </provider>
