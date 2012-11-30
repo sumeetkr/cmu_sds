@@ -37,3 +37,8 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'sqlite3'
+
+# Postgres DB
+gem 'pg'
