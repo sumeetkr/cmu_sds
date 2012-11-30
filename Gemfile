@@ -5,8 +5,6 @@ gem 'rails', '3.2.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3', '1.3.5'
-
 # Amazon Web Services
 gem 'aws-sdk', '1.7.1'
 
@@ -39,7 +37,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-
-group :production do
-  gem 'pg', '0.12.2'
-end
