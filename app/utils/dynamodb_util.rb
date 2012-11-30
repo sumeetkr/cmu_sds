@@ -28,13 +28,14 @@ sensor_readings_table_name = "SensorReadingV2"
   end
 end
 
+#check if table exists
 print TABLES[sensor_readings_table_name]
 
 # add an item
 item = TABLES[sensor_readings_table_name].items.create('id' => '12333', 'timestamp'=> '123456', 'foo' => 'bar')
 
-puts item
 # add attributes to an item
 item.attributes.add 'category' => %w(demo), 'tags' => %w(sample item)
 
+#shows the attributes of the item
 TABLES[sensor_readings_table_name].items.each{|i| puts i.attributes.to_h }
