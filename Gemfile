@@ -41,4 +41,4 @@ gem 'jquery-rails'
 gem 'sqlite3'
 
 # Postgres DB
-gem 'pg'
+gem 'pg', '~> 0.12.2'
