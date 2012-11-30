@@ -42,3 +42,4 @@ gem 'sqlite3'
 
 # Postgres DB
 gem 'pg', '0.12.2'
+
