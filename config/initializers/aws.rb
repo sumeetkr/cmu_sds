@@ -1,4 +1,7 @@
-AWS.config({
-  :access_key_id => 'your_access_key_id',
-  :secret_access_key => 'your_secret_access_key',
-})
+# load the libraries
+require 'aws'
+# log requests using the default rails logger
+AWS.config(:logger => Rails.logger)
+# load credentials from a file
+config_path = File.expand_path(File.dirname(__FILE__)+"/../aws.yml")
+AWS.config(YAML.load(File.read(config_path)))
