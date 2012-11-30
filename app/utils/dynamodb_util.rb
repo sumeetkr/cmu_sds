@@ -31,11 +31,37 @@ end
 #check if table exists
 print TABLES[sensor_readings_table_name]
 
+#{
+#    "acc_z": 1005,
+#    "bat": 1005,
+#    "gpio_state": 1,
+#    "temp": 510,
+#    "light": 889,
+#    "__class__": "Env_Data",
+#    "humidity": 23,
+#    "motion": 1005,
+#    "pressure": 101740,
+#    "__module__": "pyfly",
+#    "digital_temp": 241,
+#    "audio_p2p": 1,
+#    "timestamp": 1353441771000,
+#    "id": "1",
+#    "acc_y": 344,
+#    "acc_x": 336
+#}
+
+
 # add an item
-item = TABLES[sensor_readings_table_name].items.create('id' => '12333', 'timestamp'=> '123456', 'foo' => 'bar')
+item = TABLES[sensor_readings_table_name].items.create('id' => '12345',
+                                                       'timestamp' => '1353441771000',
+                                                       'temp' => '510',
+                                                       'acc_x' => '336',
+                                                       'acc_y' => '344',
+                                                       'acc_z' => '1005'
+)
 
 # add attributes to an item
 item.attributes.add 'category' => %w(demo), 'tags' => %w(sample item)
 
 #shows the attributes of the item
-TABLES[sensor_readings_table_name].items.each{|i| puts i.attributes.to_h }
+TABLES[sensor_readings_table_name].items.each { |i| puts i.attributes.to_h }
