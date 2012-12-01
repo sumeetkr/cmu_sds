@@ -7,6 +7,7 @@ gem 'rails', '3.2.9'
 
 # Amazon Web Services
 gem 'aws-sdk', '1.7.1'
+gem 'bootstrap-sass-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
