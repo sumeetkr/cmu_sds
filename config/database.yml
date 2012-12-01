@@ -12,7 +12,7 @@ development:
   adapter: sqlite3
   encoding: utf8
   database: cmu_sds_development
-  username: kaush
+  username: mhennessy
   password:
 
 # Warning: The database defined as "test" will be erased and
@@ -22,7 +22,7 @@ test:
   adapter: sqlite3
   encoding: utf8
   database: cmu_sds_test
-  username: kaush
+  username: mhennessy
   password:
 
 
@@ -30,5 +30,5 @@ production:
   adapter: sqlite3
   encoding: utf8
   database: cmu_sds_production
-  username: kaush
+  username: mhennessy
   password:
