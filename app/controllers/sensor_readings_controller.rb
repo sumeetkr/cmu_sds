@@ -19,11 +19,19 @@ class SensorReadingsController < ApplicationController
   end
 
   def index
-    #  expect start_time, end_time, id
-    #  return json collection
     id = params[:id]
-    readings = @sensor_reading_table.items.query(:hash_value => id, :scan_index_forward => false).select.map {|i| i.attributes}
-    render :json => readings
+
+    readings_json = []
+
+    @sensor_reading_table.items.each do |reading|
+      readings_json << {:id => reading.attributes["id"],
+                        :temp => reading.attributes["temp"],
+                        :timestamp => reading.attributes["timestamp"]
+      }
+
+    end
+
+    render :json => readings_json
   end
 
   def initialize_dynmodb
