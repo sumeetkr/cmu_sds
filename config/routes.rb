@@ -5,6 +5,6 @@ CmuSds::Application.routes.draw do
 
   #root :to => 'projects#index'
 
-  resource :sensor_readings
+  resources :sensor_readings
 
 end
