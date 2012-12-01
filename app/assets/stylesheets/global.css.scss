@@ -1,0 +1,86 @@
+@import "mixins_global";
+
+
+/* GLOBAL ENTRIES
+------------------------------------------------------------------*/
+
+#page-header{
+    background-color: $lighter-gray;
+
+    #wordmark{
+        @include clear;
+        border: 1px solid black;
+        background-color: #900;
+        height: 35px;
+        h2 a {
+            @include mir;
+            display: block;
+            height: 35px;
+            width: 235px;
+            background-image: url(wordmark.gif);
+        }
+    }
+
+    #banner-wrapper{
+        display: block;
+        #banner{
+            @include clear;
+            overflow: auto;
+
+            width: $width-screen;
+            margin: 0 auto;
+            padding: 2em;
+
+            .mascot{
+                display:block;
+                float: left;
+                margin-left: 8em;
+            }
+
+            .logo{
+                float: left;
+                margin-left: 6em;
+            }
+        }
+    }
+
+}
+
+
+.page-content{
+
+    .notice, .error_explanation{
+        padding: 1em 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2em;
+        background-color: yellow;
+    }
+    .error_explanation{
+        background-color: red;
+
+        .error-field-info{
+            margin: 1em 0;
+        }
+
+        ul {
+            padding-left: 20em;
+            text-align: left;
+            font-size: 0.8em;
+            li{
+                list-style: circle;
+            }
+        }
+
+    }
+
+}
+
+
+#page-footer{
+    margin-top: 2em;
+    background-color: $gray;
+    text-align: center;
+    padding: 3em 0;
+    font-size: 1.5em
+}

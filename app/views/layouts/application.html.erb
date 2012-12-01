@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CmuSds</title>
+  <title>Carnegie Mellon Silicon Valley - Sensor Data Storage <%= @page_title %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
+
+<div id="page-wrapper">
+    <div id="page-header">
+        <div id="wordmark">
+            <h2>
+                <a href="http://cmu.edu" title="Carnegie Mellon University">
+                    <span>Carnegie Mellon University</span>
+                </a>
+            </h2>
+        </div>
+
+        <a id="banner-wrapper" href="/">
+            <div id="banner">
+                <div class="mascot">
+                    <%= image_tag('cmu_mascot.png', :alt => 'Scotty dog Mascot', :height => '100', :float => 'left') %>
+                </div>
+
+                <div class="logo">
+                    <%= image_tag('', :alt => 'Carnegie Mellon University Silicon Valley - SDS', :height => '100', :float => 'left') %>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
 
 <%= yield %>
 
+<div id="page-footer">
+    <p>Copyright © Carngie Mellon University - Silicon Valley Campus.</p>
+</div>
+
+
+</div> <!-- page-wrapper -->
+
 </body>
+
 </html>
