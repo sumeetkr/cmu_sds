@@ -9,5 +9,17 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require_tree ./jqplot
+ *= require_tree ./datepicker
  *= require_tree .
  */
+@import "twitter/bootstrap";
+
+.main-div {
+  margin-top: 80px;
+}
+
+.sensor-tree-div {
+  margin-bottom: 5px;
+  padding: 5px, 2px, 5px, 2px;
+}

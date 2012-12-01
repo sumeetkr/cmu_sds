@@ -12,4 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ./tree.js
+//= require twitter/bootstrap
+//= require_tree ./datepicker
+//= require_tree ./jqplot
+//= require ./plugin/jqplot.pieRenderer.min.js
+//= require ./plugin/jqplot.donutRenderer.min.js
+//= require ./plugin/jqplot.dateAxisRenderer.min.js
+//= require ./plugin/jqplot.logAxisRenderer.min.js
+//= require ./plugin/jqplot.canvasTextRenderer.min.js
+//= require ./plugin/jqplot.canvasAxisTickRenderer.min.js
+//= require ./plugin/jqplot.ohlcRenderer.min.js
+//= require ./plugin/jqplot.cursor.min.js
 //= require_tree .
