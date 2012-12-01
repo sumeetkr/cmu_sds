@@ -41,12 +41,9 @@ namespace :db do
 
   def populate_dynamodb
 
-    AWS.config(
-        access_key_id: "AKIAIPTXJSGSYF2M6WUQ",
-        secret_access_key: "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"
-    )
     # create a table (10 read and 5 write capacity units) with the
     # default schema (id string hash key)
+    # do nothing if table exists
     db = AWS::DynamoDB.new
     dynamodb_tables = {}
 
@@ -55,12 +52,11 @@ namespace :db do
     {
         sensor_readings_table_name => {
             hash_key: {id: :string},
-            range_key: {timestamp: :string}
+            range_key: {timestamp: :number}
         }
     }.each_pair do |table_name, schema|
       begin
 
-        print "check table exsits!\n"
         dynamodb_tables[table_name] = db.tables[table_name].load_schema
         print "table exsits!\n"
       rescue AWS::DynamoDB::Errors::ResourceNotFoundException
@@ -72,26 +68,26 @@ namespace :db do
       end
     end
 
-#check if table exists
+    #check if table exists
     print dynamodb_tables[sensor_readings_table_name]
-
 
     readings = []
     id = 12346
     timestamp = 1353441771000
     temp = 510
 
-    5.times do
+    25.times do
 
       readings << {'id' => id.to_s,
                    'timestamp' => timestamp,
-                   'temp' => '510',
+                   'temp' => temp.to_s,
                    'acc_x' => '336',
                    'acc_y' => '344',
                    'acc_z' => '1005'}
 
       id++
-      timestamp +=  60 * 1000
+      timestamp += 60 * 1000
+      temp += 10
     end
 
 #Batch write to dynamo db
