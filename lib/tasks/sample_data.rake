@@ -1,3 +1,5 @@
+require "aws"
+
 namespace :db do
 
   desc "Runs database migrations"
@@ -29,6 +31,7 @@ namespace :db do
   desc "Fill database with sample data"
   task :populate => [:environment] do
     #Call methods to populate db
+    populate_dynamodb
     puts "Finished populating the database."
   end
 
@@ -36,4 +39,65 @@ namespace :db do
   task :repopulate => [:migrate_all, :empty, :populate] do
   end
 
+  def populate_dynamodb
+
+    AWS.config(
+        access_key_id: "AKIAIPTXJSGSYF2M6WUQ",
+        secret_access_key: "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"
+    )
+    # create a table (10 read and 5 write capacity units) with the
+    # default schema (id string hash key)
+    db = AWS::DynamoDB.new
+    dynamodb_tables = {}
+
+    sensor_readings_table_name = "SensorReadingV3"
+
+    {
+        sensor_readings_table_name => {
+            hash_key: {id: :string},
+            range_key: {timestamp: :string}
+        }
+    }.each_pair do |table_name, schema|
+      begin
+
+        print "check table exsits!\n"
+        dynamodb_tables[table_name] = db.tables[table_name].load_schema
+        print "table exsits!\n"
+      rescue AWS::DynamoDB::Errors::ResourceNotFoundException
+        table = db.tables.create(table_name, 10, 5, schema)
+        print "Creating table #{table_name}..."
+        sleep 1 while table.status == :creating
+        print "done!\n"
+        dynamodb_tables[table_name] = table.load_schema
+      end
+    end
+
+#check if table exists
+    print dynamodb_tables[sensor_readings_table_name]
+
+
+    readings = []
+    id = 12346
+    timestamp = 1353441771000
+    temp = 510
+
+    5.times do
+
+      readings << {'id' => id.to_s,
+                   'timestamp' => timestamp,
+                   'temp' => '510',
+                   'acc_x' => '336',
+                   'acc_y' => '344',
+                   'acc_z' => '1005'}
+
+      id++
+      timestamp +=  60 * 1000
+    end
+
+#Batch write to dynamo db
+    dynamodb_tables[sensor_readings_table_name].batch_write(
+        :put => readings
+    )
+
+  end
 end
