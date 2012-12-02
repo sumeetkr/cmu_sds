@@ -9,6 +9,6 @@ CmuSds::Application.routes.draw do
 
   match "sensors/index" => "sensors#index"   # by default GET index goes to show
 
-  resource :sensor_readings, :sensors
+  resources :sensor_readings, :sensors
 
 end
