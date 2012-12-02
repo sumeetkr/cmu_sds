@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130232318) do
+ActiveRecord::Schema.define(:version => 0) do
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"
@@ -46,25 +46,16 @@ ActiveRecord::Schema.define(:version => 20121130232318) do
     t.string   "guid"
     t.string   "device_type_id"
     t.string   "metadata"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "network_address"
+    t.string   "physical_location"
+    t.integer  "sensor_id"
   end
 
   create_table "sensor_readings", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "sensor_registries", :force => true do |t|
-    t.string   "sensor_guid"
-    t.string   "sensor_id"
-    t.string   "device_guid"
-    t.string   "device_id"
-    t.string   "network_address"
-    t.string   "physical_location"
-    t.string   "predecessor",       :default => "null"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
   end
 
   create_table "sensor_type_registries", :force => true do |t|
@@ -84,8 +75,14 @@ ActiveRecord::Schema.define(:version => 20121130232318) do
     t.string   "sensor_type_id"
     t.integer  "min_value"
     t.integer  "max_value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "device_guid"
+    t.string   "device_id"
+    t.string   "predecessor",    :default => "null"
+    t.integer  "gps_coord_lat"
+    t.integer  "gps_coord_long"
+    t.integer  "gps_coord_alt"
   end
 
   create_table "virtual_devices", :force => true do |t|

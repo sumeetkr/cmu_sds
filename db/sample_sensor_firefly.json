@@ -16,3 +16,6 @@
     "acc_y": 344, // sensor, 1/3 of reading
     "acc_x": 336 // sensor, 1/3 of reading
 }
+
+// GPS coordinates for Room 1055 in Decimal Degress
+// 37.412251N,-122.058964W
