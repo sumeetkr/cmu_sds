@@ -4,20 +4,6 @@ class SensorReadingsController < ApplicationController
   respond_to :html, :json
   before_filter :initialize_dynmodb
 
-
-  def show
-    render :text => "Hi", :status => 200, :content_type => 'text/html'
-  end
-
-  def create
-    #reading_json = params[:reading]
-    reading_json = request.body.read
-    reading_hash = ActiveSupport::JSON.decode(reading_json)
-
-    @sensor_reading_table.items.create(reading_hash)
-    render :text => "Success", :status => 200, :content_type => 'text/html'
-  end
-
   def index
     id = params[:id]
 
@@ -32,6 +18,18 @@ class SensorReadingsController < ApplicationController
     end
 
     render :json => readings_json
+  end
+
+  def show
+    render :text => "Hi", :status => 200, :content_type => 'text/html'
+  end
+
+  def create
+    reading_json = request.body.read
+    reading_hash = ActiveSupport::JSON.decode(reading_json)
+
+    @sensor_reading_table.items.create(reading_hash)
+    render :text => "Success", :status => 200, :content_type => 'text/html'
   end
 
   def initialize_dynmodb
