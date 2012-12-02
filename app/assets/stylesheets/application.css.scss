@@ -19,6 +19,19 @@
   margin-top: 80px;
 }
 
+.inner {
+  margin: 0 20px 0 20px;
+}
+
+#header {
+  background-color: #85000A;
+  color: #FFF;
+}
+
+#main-div {
+  margin-top: 80px;
+}
+
 .sensor-tree-div {
   margin-bottom: 5px;
   padding: 5px, 2px, 5px, 2px;
@@ -26,4 +39,15 @@
 
 .actions {
   margin-top: 20px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  padding: 15px 0;
+  border-top: 1px solid #E5E5E5;
+  background-color: #85000A;
+  color: #FFF;
 }
