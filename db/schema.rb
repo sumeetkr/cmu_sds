@@ -11,6 +11,120 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20121201213611) do
+
+  create_table "device_agents", :force => true do |t|
+    t.string   "guid"
+    t.string   "metadata"
+    t.string   "network_address"
+    t.string   "physical_location"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "device_registries", :force => true do |t|
+    t.string   "device_guid"
+    t.string   "device_id"
+    t.string   "device_agent_id"
+    t.string   "device_agent_guid"
+    t.string   "network_address"
+    t.string   "physical_location"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "device_types", :force => true do |t|
+    t.string   "type"
+    t.string   "version"
+    t.string   "manufacturer"
+    t.string   "metadata"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "devices", :force => true do |t|
+    t.string   "guid"
+    t.string   "device_type_id"
+    t.string   "metadata"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "sensor_readings", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "sensor_registries", :force => true do |t|
+    t.string   "sensor_guid"
+    t.string   "sensor_id"
+    t.string   "device_guid"
+    t.string   "device_id"
+    t.string   "network_address"
+    t.string   "physical_location"
+    t.string   "predecessor",       :default => "null"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
+  create_table "sensor_type_registries", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "sensor_types", :force => true do |t|
+    t.string   "type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "sensors", :force => true do |t|
+    t.string   "guid"
+    t.string   "metadata"
+    t.string   "sensor_type_id"
+    t.integer  "min_value"
+    t.integer  "max_value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "virtual_devices", :force => true do |t|
+    t.string   "guid"
+    t.string   "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "virtual_sensor_registries", :force => true do |t|
+    t.string   "virtual_sensor_id"
+    t.string   "sensor_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "virtual_sensors", :force => true do |t|
+    t.string   "guid"
+    t.string   "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

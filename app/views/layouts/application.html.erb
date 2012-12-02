@@ -9,9 +9,22 @@
   <header class="navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <h2>
-          Sensor Data Storage
-        </h2>
+        <div class="pull-left">
+            <h2>
+            Sensor Data Storage
+            </h2>
+        </div>
+        <div class="actions pull-right">
+          <h5>
+            <% if current_user %>
+              <span><%= "Welcome #{current_user.email}"  %></span>
+              <%= link_to "Log Out", destroy_user_session_path, :method => :delete %>
+            <% else %>
+              <%= link_to "Log In", new_user_session_path %>
+            <% end %>
+            <a href="#">Sensor Reading</a>
+          </h5>
+        </div>
       </div>
     </div>
   </header>
