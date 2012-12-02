@@ -8,39 +8,52 @@ gem 'devise'
 
 # Amazon Web Services
 gem 'aws-sdk', '1.7.1'
+
 gem 'bootstrap-sass-rails'
+gem 'heroku'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  gem 'sqlite3', '1.3.5'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+  #Used to annotate models with the database schema
+  gem 'annotate'
 
-# Use unicorn as the app server
-# gem 'unicorn'
+  #Gems for testing
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'spork-rails'
+  gem 'guard-rspec'
+  gem 'guard-spork'
 
-# Deploy with Capistrano
-# gem 'capistrano'
+  #Guard dependencies
+  gem 'rb-fsevent'
+  gem 'growl'
+  gem 'rails-erd'
+end
 
-# To use debugger
-# gem 'debugger'
+group :test do
+  #Integration
+  gem 'capybara'
+  # So that capybara can launch a browser
+  gem 'launchy'
 
-gem 'sqlite3'
+  #Code coverage
+  gem 'simplecov'
 
-# Postgres DB
-gem 'pg', '0.12.2'
+  gem 'database_cleaner'
+end
+
+group :production do
+  gem 'pg', '0.12.2'
+end
 
