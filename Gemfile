@@ -10,8 +10,6 @@ gem 'devise'
 gem 'aws-sdk', '1.7.1'
 gem 'bootstrap-sass-rails'
 
-gem 'json'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
