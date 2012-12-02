@@ -1,5 +1,5 @@
 CmuSds::Application.routes.draw do
-
+  devise_for :users
   # The priority is based upon order of creation:
   # first created -> highest priority.
   root :to => 'home#index'
@@ -8,8 +8,5 @@ CmuSds::Application.routes.draw do
 
 
   resources :sensor_readings, :sensors, :devices, :device_agents
-
-  #match "sensors/index" => "sensors#index"   # by default GET index goes to show
   match ':controller(/:action(/:id))(.:format)'
-
 end

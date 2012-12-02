@@ -12,7 +12,7 @@ namespace :heroku do
 
   desc "empty the database by reloading the schema"
   task :empty => [:environment] do
-    puts `heroku pg:reset DATABASE --confirm sdscmusv`
+    puts `heroku pg:reset DATABASE --confirm cmusds`
     puts `heroku run rake db:schema:load`
   end
 

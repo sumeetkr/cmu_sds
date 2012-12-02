@@ -9,7 +9,7 @@ AWS.config(
 DB = AWS::DynamoDB.new
 TABLES = {}
 
-sensor_readings_table_name = "SensorReadingV2"
+sensor_readings_table_name = "SensorReadingV3"
 
 {
     sensor_readings_table_name => {
@@ -54,7 +54,7 @@ sample_json=
 
 # add an individual item
 item = TABLES[sensor_readings_table_name].items.create('id' => '12345',
-                                                       'timestamp' => '1353441771000',
+                                                       'timestamp' => 1353441771000,
                                                        'temp' => '510',
                                                        'acc_x' => '336',
                                                        'acc_y' => '344',
@@ -66,10 +66,10 @@ item = TABLES[sensor_readings_table_name].items.create('id' => '12345',
 TABLES[sensor_readings_table_name].batch_write(
     :put => [
         {'id' => '12351',
-         'timestamp' => '1353441771000',
+         'timestamp' => 1353441771000,
          'temp' => '510'},
         {'id' => '12352',
-         'timestamp' => '1353441771000',
+         'timestamp' => 1353441771000,
          'temp' => '510'}
     ]
 )
