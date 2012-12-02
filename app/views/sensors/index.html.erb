@@ -1,10 +1,23 @@
-<% @page_title = "- Sensor Page" %>
+<% @page_title = "| Sensors | List" %>
 
- <div class="page-content">
+<h1 style="text-align: left;">List of Sensor</h1>
 
+    <table>
+        <tr>
+            <td>guid</td>
+            <td>Sensor Type</td>
+            <td>Parent Device</td>
+            <td colspan='2'>Actions</td>
+        </tr>
+        <% @sensors.each do |sensor| %>
+        <tr>
+            <td><%= sensor.guid %></td>
+            <td><%= sensor.sensor_type_id %></td>
+            <td><%= sensor.device_guid %></td>
+            <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
+            <td><%= link_to 'Delete', sensor, confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+        <% end %>
+    </table>
 
-    <div>
-        Welcome to the Sensor index page.
-    </div>
-
-</div>
+<%= link_to 'Back', root_path %>

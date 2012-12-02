@@ -1,7 +1,7 @@
 class Device < ActiveRecord::Base
-    has_many :device_registries
-    has_many :device_agents, :through => :device_registries
+    attr_accessible :guid, :device_type_id, :device_agent_id, :network_address, :physical_location
+    #has_many :device_registries
+    has_and_belongs_to_many :device_agents
     belongs_to :device_type
     has_many :sensors
-  # attr_accessible :title, :body
 end

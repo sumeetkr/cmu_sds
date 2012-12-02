@@ -1,31 +1,5 @@
-<% @page_title = "- Create new sensor" %>
+<% @page_title = "| Sensors | New" %>
 
-<div class="page-content">
-    <h1>Add a new Sensor here</h1>
-
-    <%= form_for :sensor, :url => {:action => 'create'}  do |f| %>
-
-
-        <%= f.text_field :guid, :placeholder => 'GUID' %>
-
-        <br />
-        <label for="metadata">Metadata:</label>
-        <input id="metadata" name="metadata" type="text" />
-        <br />
-        <select id="sensor_type_id">
-            <option value="">Pick a Sensor Type</option>
-            <option value="">Temperature Sensor X</option>
-            <option value="">Temperature Sensor Y</option>
-            <option value="">Pressure Sensor</option>
-            <option value="">Humidity Sensor</option>
-        </select>
-        <br />
-        <label for="min_value">Minimum Value: </label>
-        <input id="min_value" name="min_value" type="text" />
-        <br />
-        <label for="max_value">Maximum Value: </label>
-        <input id="max_value" name="max_value" type="text" />
-        <br />
-        <%= f.submit "Create Sensor" %>
-    <% end %>
-</div>
+<h1 style="text-align: left;">New Sensor Information</h1>
+<%= render 'form' %>
+<%= link_to 'Back', sensors_path %>

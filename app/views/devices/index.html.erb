@@ -1,0 +1,27 @@
+<% @page_title = "| Device | List" %>
+
+<h1 style="text-align: left;">List of Devices</h1>
+
+    <table>
+        <tr>
+            <td>guid</td>
+            <td>device_type_id</td>
+            <td>network_address</td>
+            <td>physical_location</td>
+            <td>device_agent_guid</td>
+            <td colspan='2'>Actions</td>
+        </tr>
+        <% @devices.each do |device| %>
+        <tr>
+            <td><%= device.guid %></td>
+            <td><%= device.device_type_id %></td>
+            <td><%= device.network_address %></td>
+            <td><%= device.physical_location %></td>
+            <td><%= device.device_agent_guid %></td>
+            <td><%= link_to 'Edit', edit_device_path(device) %></td>
+            <td><%= link_to 'Delete', device, confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+        <% end %>
+    </table>
+
+<%= link_to 'Back', root_path %>

@@ -1,0 +1,23 @@
+<% @page_title = "| Device Agents | List" %>
+
+<h1 style="text-align: left;">List of Device Agents</h1>
+
+    <table>
+        <tr>
+            <td>guid</td>
+            <td>network_address</td>
+            <td>physical_location</td>
+            <td colspan='2'>Actions</td>
+        </tr>
+        <% @device_agents.each do |device_agent| %>
+        <tr>
+            <td><%= device_agent.guid %></td>
+            <td><%= device_agent.network_address %></td>
+            <td><%= device_agent.physical_location %></td>
+            <td><%= link_to 'Edit', edit_device_agent_path(device_agent) %></td>
+            <td><%= link_to 'Delete', device_agent, confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+        <% end %>
+    </table>
+
+<%= link_to 'Back', root_path %>
