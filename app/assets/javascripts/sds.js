@@ -1,42 +1,5 @@
 var SDS = SDS || {};
 
-SDS.treeData = [
-    {
-        label: 'Building23',
-        children: [
-            {
-                label: '129A',
-                children: [
-                    {
-                        label: 'Fire Fly'
-                    },
-                    {
-                        label: 'Super Bug'
-                    }
-                ]
-            },
-            { label: 'Noisy boy' }
-        ]
-    },
-    {
-        label: 'Building19',
-        children: [
-            {
-                label: '1055',
-                children: [
-                    {
-                        label: 'Fire Fly'
-                    },
-                    {
-                        label: 'Super Bug'
-                    }
-                ]
-            }
-        ]
-    }
-];
-
-
 SDS.chart = function() {
 
     var me = this;
@@ -64,7 +27,15 @@ SDS.chart.prototype = {
             var endDate = new Date(endDateVal[2], endDateVal[0], endDateVal[1]).valueOf();
         }
 
-        var url = "/sensor_readings/1?1=1";
+        var parts = this.sensorName.split(".");
+        if (parts.length > 0) {
+            var sensorId = parts[parts.length - 1];
+        }
+        else {
+            var sensorId = 1;
+        }
+
+        var url = "/sensor_readings/" + sensorId + "?1=1";
         if (startDate) {
             url += "&startTime=" + startDate;
         }
@@ -87,6 +58,15 @@ SDS.chart.prototype = {
 
     _drawLineChart: function(rawData) {
         var data = [];
+        var startDateVal = $("#startDate").val().split("/");
+        if (startDateVal.length == 3) {
+            var startDate = new Date(startDateVal[2], startDateVal[0], startDateVal[1]).valueOf();
+        }
+
+        var endDateVal = $("#endDate").val().split("/");
+        if (endDateVal.length == 3) {
+            var endDate = new Date(endDateVal[2], endDateVal[0], endDateVal[1]).valueOf();
+        }
 
         for (var i = 0; i < rawData.length; i++) {
             var element = rawData[i];
@@ -98,7 +78,7 @@ SDS.chart.prototype = {
             data.push(newElement);
         }
         var me = this;
-        var plot1 = $.jqplot('chart', [data], {
+        var plot = $.jqplot('chart', [data], {
             title: "Data of " + me.sensorName + ":",
             series: [{
                 neighborThreshold: 0
@@ -106,11 +86,11 @@ SDS.chart.prototype = {
             axes: {
                 xaxis: {
                     renderer:$.jqplot.DateAxisRenderer,
-                    min: 'Nov 20, 2012 12:00:00',
-                    max: 'Nov 20, 2012 14:00:00',
+                    min: startDate ? startDate : 'Nov 20, 2012 12:00:00',
+                    max: endDate ? endDate : 'Nov 20, 2012 14:00:00',
                     numberTicks: 12,
                     tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                    tickOptions:{formatString:"%#H:%#M", angle: -40}
+                    tickOptions:{formatString:"%#m-%#d %#H:%#M", angle: -40}
                 },
                 yaxis: {
                     renderer: $.jqplot.LogAxisRenderer,
@@ -184,10 +164,40 @@ SDS.chart.prototype = {
     }
 };
 
+SDS.loadSensor = function() {
+    $.ajax({
+        url: "/devices.json",
+        success: function(rawData) {
+            var data = [];
+            for (var i = 0; i < rawData.length; i++) {
+                var element = rawData[i];
+                var device = {
+                    label: element.guid,
+                    children: []
+                };
+                for (var j = 0; j < element.sensors.length; j++) {
+                    var sensorElement = element.sensors[j];
+                    var sensor = {
+                        label: sensorElement.guid
+                    };
+                    device.children.push(sensor);
+                }
+                data.push(device);
+            }
+
+            $('#sensor-tree').tree({
+                data: data,
+                selectable: true
+            });
+        }
+    });
+};
+
 (function($) {
     var pathname = window.location.pathname;
     if (pathname == "" || pathname == "/") {
         $(".left-part").removeClass("hidden");
+        SDS.loadSensor();
     }
     else {
         $(".left-part").addClass("hidden");
@@ -197,11 +207,6 @@ SDS.chart.prototype = {
     $.jqplot.config.enablePlugins = true;
 
     var chart = new SDS.chart();
-
-    $('#sensor-tree').tree({
-        data: SDS.treeData,
-        selectable: true
-    });
 
     $('#sensor-tree').bind('tree.select', function(event) {
         var node = event.node;
