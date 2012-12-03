@@ -14,17 +14,11 @@ class SensorReadingsController < ApplicationController
           :hash_value => "1",
           :range_value => startTime..endTime,
           :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << {:id => reading.attributes["id"],
-                          :temp => reading.attributes["temp"],
-                          :timestamp => reading.attributes["timestamp"]
-        }
+        readings_json << convertReadingToJson(reading)
       end
     else
       @sensor_reading_table.items.each do |reading|
-        readings_json << {:id => reading.attributes["id"],
-                          :temp => reading.attributes["temp"],
-                          :timestamp => reading.attributes["timestamp"]
-        }
+        readings_json << convertReadingToJson(reading)
       end
     end
 
@@ -48,4 +42,14 @@ class SensorReadingsController < ApplicationController
     db = AWS::DynamoDB.new
     @sensor_reading_table = db.tables[sensor_readings_table_name].load_schema
   end
+
+  private
+
+  def convertReadingToJson(reading)
+    {:id => reading.attributes["id"],
+     :temp => reading.attributes["temp"],
+     :timestamp => reading.attributes["timestamp"]
+    }
+  end
+
 end
