@@ -1,49 +1,53 @@
 class DeviceAgentsController < ApplicationController
-    def new
-        if (!params[:guid].blank?)   # && !params[:physical_location].nil? && !params[:network_address].nil?)
-            @device_agent = DeviceAgent.new(:guid => params[:guid])
-            @device_agent.physical_location = params[:physical_location] unless params[:physical_location].blank?
-            @device_agent.network_address = params[:network_address] unless params[:network_address].blank?
-            @device_agent.save
-            #redirect_to device_agents_url
-        else
-            @device_agent = DeviceAgent.new
-                respond_to do |format|
-                format.html # new.html.erb
-                format.json { render json: @device_agent }
-            end
-        end
-    end
-
-    def create
-      @device_agent = DeviceAgent.new(params[:device_agent])
-      respond_to do |format|
-        if @device_agent.save
-          format.html { redirect_to @device_agent, notice: 'Device Agent was successfully created.' }
-          # format.json { render json: @device_agent, status: :created, location: @device_agent }
-          format.js
-        else
-          format.html { render action: "new" }
-          # format.json { render json: @device_agent.errors, status: :unprocessable_entity }
-          format.js
-        end
-      end
-    end
+    respond_to :json, :html
 
     def index
         @device_agents = DeviceAgent.all
     end
 
-    def show
+    def new
+        if (!params[:guid].blank?)
+            @device_agent = DeviceAgent.new(:guid => params[:guid])
+            @device_agent.physical_location = params[:physical_location] unless params[:physical_location].blank?
+            @device_agent.network_address = params[:network_address] unless params[:network_address].blank?
+            @device_agent.save
+        else
+            @device_agent = DeviceAgent.new
+            respond_with @device_agent
+        end
     end
 
+    def create
+      @device_agent = DeviceAgent.new(params[:device_agent])
+        if @device_agent.save
+          flash[:notice] = "Device Agent created successfully !"
+          redirect_to :action => "index"
+        else
+          flash[:error] = "Couldn't create the Device agent. Please try again."
+          render "new"
+        end
+    end
     def edit
         @device_agent = DeviceAgent.find(params[:id])
     end
-
     def update
+        @device_agent = DeviceAgent.find(params[:id])
+        respond_to do |format|
+            if @device_agent.update_attributes(params[:device_agent])
+                flash[:notice] = 'Device Agent  was successfully updated.'
+                format.html { redirect_to :action => "index" }
+                format.json { head :no_content }
+            else
+              format.html { render action: "edit" }
+              format.json { render json: @device_agent.errors, status: :unprocessable_entity }
+            end
+        end
     end
 
     def destroy
+        @device_agent = DeviceAgent.find(params[:id])
+        @device_agent.delete
+        flash[:notice] = "Device Agent deleted successfully !"
+        redirect_to :action => "index"
     end
 end

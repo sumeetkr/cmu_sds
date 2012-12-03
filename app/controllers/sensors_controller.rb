@@ -1,4 +1,9 @@
 class SensorsController < ApplicationController
+    respond_to :json, :html
+
+    def index
+        @sensors = Sensor.all
+    end
 
     def new
         @sensor_types = SensorType.all
@@ -14,13 +19,9 @@ class SensorsController < ApplicationController
             @sensor.gps_coord_long = params[:gps_coord_long] unless params[:gps_coord_long].blank?
             @sensor.gps_coord_alt = params[:gps_coord_alt] unless params[:gps_coord_alt].blank?
             @sensor.save
-            #redirect_to sensors_url
         else
             @sensor = Sensor.new
-                respond_to do |format|
-                format.html # new.html.erb
-                format.json { render json: @sensor }
-            end
+            respond_with @sensor
         end
     end
     def create
@@ -33,15 +34,30 @@ class SensorsController < ApplicationController
             render "new"
         end
     end
-
-
-    def index
-        @sensors = Sensor.all
+    def edit
+    @sensor = Sensor.find(params[:id])
+    @sensor_types = SensorType.all
     end
 
-    def edit
+    def update
         @sensor = Sensor.find(params[:id])
-        @sensor_types = SensorType.all
+        respond_to do |format|
+            if @sensor.update_attributes(params[:sensor])
+                flash[:notice] = 'Sensor  was successfully updated.'
+                format.html { redirect_to :action => "index" }
+                format.json { head :no_content }
+            else
+              format.html { render action: "edit" }
+              format.json { render json: @sensor.errors, status: :unprocessable_entity }
+            end
+        end
+    end
+
+    def destroy
+        @sensor = Sensor.find(params[:id])
+        @sensor.delete
+        flash[:notice] = "Sensor deleted successfully !"
+        redirect_to :action => "index"
     end
 
 end
