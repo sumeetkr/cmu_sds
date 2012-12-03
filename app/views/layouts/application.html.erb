@@ -27,9 +27,38 @@
     </div>
   </header>
 
-
-  <%= yield %>
-
+  <div id="main-div" class="container-fluid">
+    <div class="span3">
+      <div class="left-part hidden">
+        <div class="sensor-tree-div">
+          <h5>Sensor Tree</h5>
+          <div id="sensor-tree">
+          </div>
+        </div>
+        <div>
+          <span class="help-inline">Chart type: </span>
+          <select id="chartType">
+            <option>Line</option>
+            <option>Pie</option>
+          </select>
+        </div>
+        <div>
+          <span class="help-inline">Start from: </span>
+          <input id="startDate" type="text" class="datepicker">
+        </div>
+        <div>
+          <span class="help-inline">End to:</span>
+          <input id="endDate" type="text" class="datepicker">
+        </div>
+        <div>
+          <button id="submit" type="button" class="btn btn-primary">Check it out!</button>
+        </div>
+      </div>
+    </div>
+    <div class="span12">
+      <%= yield %>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="inner">
@@ -39,6 +68,13 @@
     </div>
   </footer>
   <%= javascript_include_tag :application %>
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.dateAxisRenderer.min.js" %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.logAxisRenderer.min.js" %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.canvasTextRenderer.min.js" %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.canvasAxisTickRenderer.min.js"  %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.cursor.min.js" %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.pieRenderer.min.js" %>-->
+  <!--<%= javascript_include_tag "/assets/plugin/jqplot.donutRenderer.min.js" %>-->
 
 </body>
 
