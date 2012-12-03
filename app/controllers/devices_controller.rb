@@ -7,6 +7,7 @@ class DevicesController < ApplicationController
     end
 
     def new
+        @device_types = DeviceType.all
         if (!params[:guid].blank? && !params[:device_type_id].blank?)   # && !params[:physical_location].nil? && !params[:network_address].nil?)
             @device = Device.new(:guid => params[:guid], :device_type_id => params[:device_type_id])
             @device.physical_location = params[:physical_location] unless params[:physical_location].blank?
@@ -36,6 +37,7 @@ class DevicesController < ApplicationController
     end
 
     def edit
+        @device_types = DeviceType.all
         @device = Device.find(params[:id])
     end
     def update

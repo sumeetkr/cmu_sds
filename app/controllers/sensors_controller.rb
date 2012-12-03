@@ -35,8 +35,8 @@ class SensorsController < ApplicationController
         end
     end
     def edit
-    @sensor = Sensor.find(params[:id])
-    @sensor_types = SensorType.all
+        @sensor = Sensor.find(params[:id])
+        @sensor_types = SensorType.all
     end
 
     def update

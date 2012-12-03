@@ -126,11 +126,11 @@ namespace :db do
 
     # populate Device Types
     [
-        {:device_type => "firefly", :version => "", :manufacturer => "CMU"}
+        {:device_type => "Firefly_v2", :version => "", :manufacturer => "CMU"}
     ].each do |attributes|
       DeviceType.create(attributes)
     end
-    firefly_device_type = DeviceType.find_by_device_type("firefly")
+    firefly_device_type = DeviceType.find_by_device_type("Firefly_v2")
 
 
     # populate Devices
@@ -155,20 +155,20 @@ namespace :db do
     firefly_device_1 = Device.find_by_guid("sv.cmu.edu.b19.device.1")
 
     # populate Sensor Types
-    [{:property_type => "temperature"},
-     {:property_type => "digital_temperature"},
-     {:property_type => "light"},
-     {:property_type => "pressure"},
-     {:property_type => "humidity"},
-     {:property_type => "motion"},
-     {:property_type => "audio_p2p"},
-     {:property_type => "acc_x"},
-     {:property_type => "acc_y"},
-     {:property_type => "acc_z"}
+    [{:property_type => "Temperature"},
+     {:property_type => "Digital Temperature"},
+     {:property_type => "Light"},
+     {:property_type => "Pressure"},
+     {:property_type => "Humidity"},
+     {:property_type => "Motion"},
+     {:property_type => "Audio P2P"},
+     {:property_type => "Accelerometer x"},
+     {:property_type => "Accelerometer y"},
+     {:property_type => "Accelerometer z"}
     ].each do |attributes|
       SensorType.create(attributes)
     end
-    temperature_sensor_type = SensorType.find_by_property_type("temperature")
+    temperature_sensor_type = SensorType.find_by_property_type("Temperature")
 
     # populate Sensors
     [{

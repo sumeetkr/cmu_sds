@@ -18,7 +18,9 @@
       </tr>
       <tr>
         <td class="field"><%= f.label :device_type_id %></td>
-        <td class="field"><%= f.text_field :device_type_id %></td>
+        <td class="field"><%= f.select("device_type_id", options_for_select(
+          ["Please Select"] + @device_types.collect { |t| t.device_type }
+        )) %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :device_agent_id %></td>
