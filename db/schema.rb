@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203021657) do
+ActiveRecord::Schema.define(:version => 20121203174118) do
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(:version => 20121203021657) do
     t.string   "sensor_type_id"
     t.integer  "min_value"
     t.integer  "max_value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "device_guid"
-    t.string   "device_id"
+    t.integer  "device_id",      :limit => 255
     t.string   "predecessor"
     t.integer  "gps_coord_lat"
     t.integer  "gps_coord_long"

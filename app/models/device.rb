@@ -11,4 +11,5 @@ class Device < ActiveRecord::Base
         :sensors => self.sensors
       }
     end
+
 end
