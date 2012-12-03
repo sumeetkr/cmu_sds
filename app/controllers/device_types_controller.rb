@@ -1,11 +1,9 @@
 class DeviceTypesController < ApplicationController
+    respond_to :json, :html
 
     def index
         @device_types = DeviceType.all
-        respond_to do |format|
-            format.html
-            format.json { render json: @device_types }
-        end
+        respond_with @device_types
     end
 
     def new

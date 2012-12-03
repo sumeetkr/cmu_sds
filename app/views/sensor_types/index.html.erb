@@ -6,14 +6,14 @@
         <tr>
             <td>id</td>
             <td>property_type</td>
-            <td>metadata</td>
+            <td>metadata_json</td>
             <td colspan='2'>Actions</td>
         </tr>
         <% @sensor_types.each do |sensor_type| %>
         <tr>
             <td><%= sensor_type.id %></td>
             <td><%= sensor_type.property_type %></td>
-            <td><%= sensor_type.metadata %></td>
+            <td><%= sensor_type.metadata_json %></td>
             <td><%= link_to 'Edit', edit_sensor_type_path(sensor_type) %></td>
             <td><%= link_to 'Delete', sensor_type, confirm: 'Are you sure?', method: :delete %></td>
         </tr>

@@ -1,16 +1,13 @@
 class SensorTypesController < ApplicationController
-
+    respond_to :json, :html
     def index
         @sensor_types = SensorType.all
-        respond_to do |format|
-            format.html
-            format.json { render json: @sensor_types }
-        end
+        respond_with @sensor_types
     end
 
     def new
         if (!params[:property_type].blank?)
-            @sensor_type = SensorType.new(:property_type => params[:property_type], :metadata => params[:metadata])
+            @sensor_type = SensorType.new(:property_type => params[:property_type], :metadata_json => params[ :metadata_json])
             @sensor_type.save
             #redirect_to devices_path
         else

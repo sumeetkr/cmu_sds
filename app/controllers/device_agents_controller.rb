@@ -3,6 +3,7 @@ class DeviceAgentsController < ApplicationController
 
     def index
         @device_agents = DeviceAgent.all
+        respond_with @device_agents
     end
 
     def new
