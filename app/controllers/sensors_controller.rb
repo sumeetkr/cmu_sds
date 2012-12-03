@@ -3,6 +3,7 @@ class SensorsController < ApplicationController
 
     def index
         @sensors = Sensor.all
+        respond_with @sensors
     end
 
     def new
@@ -20,7 +21,7 @@ class SensorsController < ApplicationController
             @sensor.save
         else
             @sensor = Sensor.new
-            respond_with @sensor
+
         end
     end
     def create

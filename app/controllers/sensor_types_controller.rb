@@ -1,11 +1,8 @@
 class SensorTypesController < ApplicationController
-
+    respond_to :json, :html
     def index
         @sensor_types = SensorType.all
-        respond_to do |format|
-            format.html
-            format.json { render json: @sensor_types }
-        end
+        respond_with @sensor_types
     end
 
     def new

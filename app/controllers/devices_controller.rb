@@ -3,7 +3,7 @@ class DevicesController < ApplicationController
 
     def index
         @devices = Device.all
-        respond_with @device_types
+        respond_with @devices
     end
 
     def new
