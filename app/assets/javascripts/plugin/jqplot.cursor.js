@@ -485,7 +485,6 @@
                         if (j) {
                             s += ', ';
                         }
-                        console.log(plot.axes[g[j]]._ticks[0]);
                         var af = plot.axes[g[j]]._ticks[0].formatter;
                         var afstr = plot.axes[g[j]]._ticks[0].formatString;
                         s += af(afstr, datapos[g[j]]);

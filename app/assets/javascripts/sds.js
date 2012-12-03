@@ -75,7 +75,7 @@ SDS.chart.prototype = {
         $.ajax({
             url: url,
             success: function(data) {
-                var rawData = eval(data);
+                var rawData = data;
                 me._drawChart(rawData);
             }
         });
@@ -87,12 +87,11 @@ SDS.chart.prototype = {
 
     _drawLineChart: function(rawData) {
         var data = [];
+
         for (var i = 0; i < rawData.length; i++) {
             var element = rawData[i];
             var date = new Date(parseFloat(element["timestamp"]));
-            console.log(date);
-            var temp = parseInt(element["temp"]) / 10 - 30;
-            console.log(temp);
+            var temp = element["temp"];
             var newElement = [];
             newElement.push(date);
             newElement.push(temp);
@@ -107,30 +106,56 @@ SDS.chart.prototype = {
             axes: {
                 xaxis: {
                     renderer:$.jqplot.DateAxisRenderer,
-                    min:'Nov 20, 2012 12:00:00',
-                    tickInterval: "1 minutes",
+                    min: 'Nov 20, 2012 12:00:00',
+                    max: 'Nov 20, 2012 14:00:00',
+                    numberTicks: 12,
                     tickRenderer: $.jqplot.CanvasAxisTickRenderer,
                     tickOptions:{formatString:"%#H:%#M", angle: -40}
                 },
                 yaxis: {
                     renderer: $.jqplot.LogAxisRenderer,
-                    tickOptions:{prefix: '℃'}
+                    tickOptions:{prefix: '?'}
                 }
             },
 
             cursor: {
-                show: true,
-                zoom: false,
-                looseZoom: false,
-                showTooltip: true
+                zoom: true,
+                looseZoom: true
             }
         });
     },
 
-    _drawPieChart: function() {
+    _drawPieChart: function(rawData) {
+
+        var below300 = 0;
+        var between300and400 = 0;
+        var between400and500 = 0;
+        var between500and600 = 0;
+        var above600 = 0;
+
+        for (var i = 0; i < rawData.length; i++) {
+            var element = rawData[i];
+            var temp = parseInt(element["temp"]);
+            if (temp < 300) {
+                below300++;
+            }
+            else if (temp >= 300 && temp < 400) {
+                between300and400++;
+            }
+            else if (temp >= 400 && temp < 500) {
+                between400and500++;
+            }
+            else if (temp >= 500 && temp < 600) {
+                between500and600++;
+            }
+            else {
+                above600++;
+            }
+        }
+
         var data = [
-            ['0 ℃ - 8℃', 12],['9℃ - 16 ℃', 9], ['17℃ - 24℃', 14],
-            ['25℃ - 32℃', 16],['33℃ - 40℃', 7], ["< 0 ℃", 9]
+            ['< 300', below300],['300 - 400', between300and400], ['400 - 500', between400and500],
+            ['500 - 600', between500and600],['> 600', above600]
         ];
         var plot1 = jQuery.jqplot ('chart', [data],
             {
