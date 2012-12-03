@@ -1,7 +1,9 @@
 class DevicesController < ApplicationController
+    respond_to :json
 
     def index
         @devices = Device.all
+        respond_with @devices
     end
     def show
     end

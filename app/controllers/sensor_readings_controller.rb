@@ -4,13 +4,45 @@ class SensorReadingsController < ApplicationController
   respond_to :html, :json
   before_filter :initialize_dynmodb
 
+  def index
+    readings_json = []
+
+    # This is incredibly slow because it gets EVERYTHING.
+    # It is not optimized like the query method.
+    # I did not use query(..) because it requires a hash_value
+    @sensor_reading_table.items.each do |reading|
+      readings_json << convertReadingToJson(reading)
+    end
+
+    render :json => readings_json
+  end
 
   def show
-    render :text => "Hi", :status => 200, :content_type => 'text/html'
+    id = params[:id]
+    readings_json = []
+
+    if params.has_key?(:startTime) && params.has_key?(:endTime)
+      startTime = params[:startTime].to_i
+      endTime = params[:endTime].to_i
+      # The query method requires a hash_value
+      @sensor_reading_table.items.query(
+          :hash_value => id,
+          :range_value => startTime..endTime,
+          :select => [:id, :temp, :timestamp]).each do |reading|
+        readings_json << convertReadingToJson(reading)
+      end
+    else
+      @sensor_reading_table.items.query(
+          :hash_value => id,
+          :select => [:id, :temp, :timestamp]).each do |reading|
+        readings_json << convertReadingToJson(reading)
+      end
+    end
+
+    render :json => readings_json
   end
 
   def create
-    #reading_json = params[:reading]
     reading_json = request.body.read
     reading_hash = ActiveSupport::JSON.decode(reading_json)
 
@@ -18,25 +50,19 @@ class SensorReadingsController < ApplicationController
     render :text => "Success", :status => 200, :content_type => 'text/html'
   end
 
-  def index
-    id = params[:id]
-
-    readings_json = []
-
-    @sensor_reading_table.items.each do |reading|
-      readings_json << {:id => reading.attributes["id"],
-                        :temp => reading.attributes["temp"],
-                        :timestamp => reading.attributes["timestamp"]
-      }
-
-    end
-
-    render :json => readings_json
-  end
-
   def initialize_dynmodb
     sensor_readings_table_name = "SensorReadingV3"
     db = AWS::DynamoDB.new
     @sensor_reading_table = db.tables[sensor_readings_table_name].load_schema
   end
+
+  private
+
+  def convertReadingToJson(reading)
+    {:id => reading.attributes["id"],
+     :temp => reading.attributes["temp"],
+     :timestamp => reading.attributes["timestamp"]
+    }
+  end
+
 end
