@@ -46,7 +46,10 @@ class SensorReadingsController < ApplicationController
     reading_json = request.body.read
     reading_hash = ActiveSupport::JSON.decode(reading_json)
 
-    @sensor_reading_table.items.create(reading_hash)
+    @sensor_reading_table.batch_write(
+        :put => reading_hash
+    )
+    
     render :text => "Success", :status => 200, :content_type => 'text/html'
   end
 

@@ -72,7 +72,7 @@ namespace :db do
     print dynamodb_tables[sensor_readings_table_name]
 
     readings = []
-    id = 1
+    id = 2
     timestamp = 1353446211000
     temp = 290
 
