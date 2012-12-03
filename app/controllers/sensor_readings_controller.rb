@@ -21,7 +21,7 @@ class SensorReadingsController < ApplicationController
     id = params[:id]
     readings_json = []
 
-    if params.has_key?(:startTime) && params.has_key?(:endTime)
+    if !params[:startTime].blank? && !params[:endTime].blank?
       startTime = params[:startTime].to_i
       endTime = params[:endTime].to_i
       # The query method requires a hash_value

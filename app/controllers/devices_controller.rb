@@ -5,6 +5,7 @@ class DevicesController < ApplicationController
         @devices = Device.all
         respond_with @devices
     end
+
     def show
     end
 
@@ -23,6 +24,7 @@ class DevicesController < ApplicationController
             end
         end
     end
+
     def create
       @device = Device.new(params[:device])
       respond_to do |format|
