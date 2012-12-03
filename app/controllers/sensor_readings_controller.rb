@@ -5,17 +5,25 @@ class SensorReadingsController < ApplicationController
   before_filter :initialize_dynmodb
 
   def index
-    id = params[:id]
-
+    startTime = params[:startTime]
+    endTime = params[:endTime]
     readings_json = []
 
-    @sensor_reading_table.items.each do |reading|
-      readings_json << {:id => reading.attributes["id"],
-                        :temp => reading.attributes["temp"],
-                        :timestamp => reading.attributes["timestamp"]
-      }
 
+    @sensor_reading_table.items.query(
+        :hash_value => "1",
+        :range_value => startTime..endTime,
+        :select => [:id, :temp, :timestamp]).each do |reading|
+      readings_json << reading
     end
+
+
+    #@sensor_reading_table.items.each do |reading|
+    #  readings_json << {:id => reading.attributes["id"],
+    #                    :temp => reading.attributes["temp"],
+    #                    :timestamp => reading.attributes["timestamp"]
+    #  }
+    #end
 
     render :json => readings_json
   end
@@ -36,5 +44,7 @@ class SensorReadingsController < ApplicationController
     sensor_readings_table_name = "SensorReadingV3"
     db = AWS::DynamoDB.new
     @sensor_reading_table = db.tables[sensor_readings_table_name].load_schema
+    #@sensor_reading_table.hash_key = {:id => :string}
+    #@sensor_reading_table.range_key = {:timestamp => :number}
   end
 end
