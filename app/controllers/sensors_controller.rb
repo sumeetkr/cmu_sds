@@ -14,7 +14,7 @@ class SensorsController < ApplicationController
             @sensor.max_value = params[:max_value] unless params[:max_value].blank?
             @sensor.device_guid = params[:device_guid] unless params[:device_guid].blank?
             @sensor.predecessor = params[:predecessor] unless params[:predecessor].blank?
-            @sensor.metadata = params[:metadata] unless params[:metadata].blank?
+            @sensor.metadata_json = params[:metadata_json] unless params[:metadata_json].blank?
             @sensor.gps_coord_lat = params[:gps_coord_lat] unless params[:gps_coord_lat].blank?
             @sensor.gps_coord_long = params[:gps_coord_long] unless params[:gps_coord_long].blank?
             @sensor.gps_coord_alt = params[:gps_coord_alt] unless params[:gps_coord_alt].blank?

@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203174118) do
+ActiveRecord::Schema.define(:version => 20121203225303) do
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"
-    t.string   "metadata"
+    t.string   "metadata_json"
     t.string   "network_address"
     t.string   "physical_location"
     t.datetime "created_at",        :null => false
@@ -33,15 +33,15 @@ ActiveRecord::Schema.define(:version => 20121203174118) do
     t.string   "device_type"
     t.string   "version"
     t.string   "manufacturer"
-    t.string   "metadata"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "metadata_json"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "devices", :force => true do |t|
     t.string   "guid"
     t.string   "device_type_id"
-    t.string   "metadata"
+    t.string   "metadata_json"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "network_address"
@@ -65,12 +65,12 @@ ActiveRecord::Schema.define(:version => 20121203174118) do
     t.string   "property_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "metadata"
+    t.string   "metadata_json"
   end
 
   create_table "sensors", :force => true do |t|
     t.string   "guid"
-    t.string   "metadata"
+    t.string   "metadata_json"
     t.string   "sensor_type_id"
     t.integer  "min_value"
     t.integer  "max_value"
