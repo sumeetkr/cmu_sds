@@ -53,11 +53,30 @@ SDS.chart.prototype = {
         var endDate = $("#endDate").val();
         var me = this;
         $("#chart").empty();
+
+        var startDateVal = $("#startDate").val().split("/");
+        if (startDateVal.length == 3) {
+            var startDate = new Date(startDateVal[2], startDateVal[0], startDateVal[1]).valueOf();
+        }
+
+        var endDateVal = $("#endDate").val().split("/");
+        if (endDateVal.length == 3) {
+            var endDate = new Date(endDateVal[2], endDateVal[0], endDateVal[1]).valueOf();
+        }
+
+        var url = "/sensor_readings/1?1=1";
+        if (startDate) {
+            url += "&startTime=" + startDate;
+        }
+        if (endDate) {
+            url += "&endTime=" + endDate;
+        }
+
         $.ajax({
-            url: '/',
-            success: function() {
-                var data = eval("[{'id':'1','temp':'510','timestamp':'1353441771000.0'},{'id':'1','temp':'520','timestamp':'1353441831000.0'},{'id':'1','temp':'530','timestamp':'1353441891000.0'},{'id':'1','temp':'540','timestamp':'1353441951000.0'},{'id':'1','temp':'550','timestamp':'1353442011000.0'},{'id':'1','temp':'560','timestamp':'1353442071000.0'},{'id':'1','temp':'570','timestamp':'1353442131000.0'},{'id':'1','temp':'580','timestamp':'1353442191000.0'},{'id':'1','temp':'590','timestamp':'1353442251000.0'},{'id':'1','temp':'600','timestamp':'1353442311000.0'},{'id':'1','temp':'610','timestamp':'1353442371000.0'},{'id':'1','temp':'620','timestamp':'1353442431000.0'},{'id':'1','temp':'630','timestamp':'1353442491000.0'},{'id':'1','temp':'640','timestamp':'1353442551000.0'},{'id':'1','temp':'650','timestamp':'1353442611000.0'},{'id':'1','temp':'660','timestamp':'1353442671000.0'},{'id':'1','temp':'670','timestamp':'1353442731000.0'},{'id':'1','temp':'680','timestamp':'1353442791000.0'},{'id':'1','temp':'690','timestamp':'1353442851000.0'},{'id':'1','temp':'700','timestamp':'1353442911000.0'},{'id':'1','temp':'710','timestamp':'1353442971000.0'},{'id':'1','temp':'720','timestamp':'1353443031000.0'},{'id':'1','temp':'730','timestamp':'1353443091000.0'},{'id':'1','temp':'740','timestamp':'1353443151000.0'},{'id':'1','temp':'750','timestamp':'1353443211000.0'},{'id':'1','temp':'750','timestamp':'1353443271000.0'},{'id':'1','temp':'740','timestamp':'1353443331000.0'},{'id':'1','temp':'730','timestamp':'1353443391000.0'},{'id':'1','temp':'720','timestamp':'1353443451000.0'},{'id':'1','temp':'710','timestamp':'1353443511000.0'},{'id':'1','temp':'700','timestamp':'1353443571000.0'},{'id':'1','temp':'690','timestamp':'1353443631000.0'},{'id':'1','temp':'680','timestamp':'1353443691000.0'},{'id':'1','temp':'670','timestamp':'1353443751000.0'},{'id':'1','temp':'660','timestamp':'1353443811000.0'},{'id':'1','temp':'650','timestamp':'1353443871000.0'},{'id':'1','temp':'640','timestamp':'1353443931000.0'},{'id':'1','temp':'630','timestamp':'1353443991000.0'},{'id':'1','temp':'620','timestamp':'1353444051000.0'},{'id':'1','temp':'610','timestamp':'1353444111000.0'},{'id':'1','temp':'600','timestamp':'1353444171000.0'},{'id':'1','temp':'590','timestamp':'1353444231000.0'},{'id':'1','temp':'580','timestamp':'1353444291000.0'},{'id':'1','temp':'570','timestamp':'1353444351000.0'},{'id':'1','temp':'560','timestamp':'1353444411000.0'},{'id':'1','temp':'550','timestamp':'1353444471000.0'},{'id':'1','temp':'540','timestamp':'1353444531000.0'},{'id':'1','temp':'530','timestamp':'1353444591000.0'},{'id':'1','temp':'520','timestamp':'1353444651000.0'},{'id':'1','temp':'510','timestamp':'1353444711000.0'}]");
-                me._drawChart(data);
+            url: url,
+            success: function(data) {
+                var rawData = eval(data);
+                me._drawChart(rawData);
             }
         });
     },
@@ -73,6 +92,7 @@ SDS.chart.prototype = {
             var date = new Date(parseFloat(element["timestamp"]));
             console.log(date);
             var temp = parseInt(element["temp"]) / 10 - 30;
+            console.log(temp);
             var newElement = [];
             newElement.push(date);
             newElement.push(temp);
