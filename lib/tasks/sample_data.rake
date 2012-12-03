@@ -31,7 +31,7 @@ namespace :db do
   desc "Fill database with sample data"
   task :populate => [:environment] do
     #Call methods to populate db
-    populate_dynamodb
+    #populate_dynamodb
     puts "Finished populating the database."
   end
 
@@ -72,9 +72,9 @@ namespace :db do
     print dynamodb_tables[sensor_readings_table_name]
 
     readings = []
-    id = 12346
-    timestamp = 1353441771000
-    temp = 510
+    id = 1
+    timestamp = 1353446211000
+    temp = 290
 
     25.times do
 
@@ -90,7 +90,7 @@ namespace :db do
       temp += 10
     end
 
-#Batch write to dynamo db
+    #Batch write to dynamo db
     dynamodb_tables[sensor_readings_table_name].batch_write(
         :put => readings
     )
