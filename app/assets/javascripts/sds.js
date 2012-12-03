@@ -19,12 +19,12 @@ SDS.chart.prototype = {
 
         var startDateVal = $("#startDate").val().split("/");
         if (startDateVal.length == 3) {
-            var startDate = new Date(startDateVal[2], startDateVal[0], startDateVal[1]).valueOf();
+            var startDate = new Date(startDateVal[2], startDateVal[0] - 1, startDateVal[1]).valueOf();
         }
 
         var endDateVal = $("#endDate").val().split("/");
         if (endDateVal.length == 3) {
-            var endDate = new Date(endDateVal[2], endDateVal[0], endDateVal[1]).valueOf();
+            var endDate = new Date(endDateVal[2], endDateVal[0] - 1, endDateVal[1]).valueOf();
         }
 
         var parts = this.sensorName.split(".");
@@ -60,12 +60,12 @@ SDS.chart.prototype = {
         var data = [];
         var startDateVal = $("#startDate").val().split("/");
         if (startDateVal.length == 3) {
-            var startDate = new Date(startDateVal[2], startDateVal[0], startDateVal[1]).valueOf();
+            var startDate = new Date(startDateVal[2], startDateVal[0] - 1, startDateVal[1]).valueOf();
         }
 
         var endDateVal = $("#endDate").val().split("/");
         if (endDateVal.length == 3) {
-            var endDate = new Date(endDateVal[2], endDateVal[0], endDateVal[1]).valueOf();
+            var endDate = new Date(endDateVal[2], endDateVal[0] - 1, endDateVal[1]).valueOf();
         }
 
         for (var i = 0; i < rawData.length; i++) {
