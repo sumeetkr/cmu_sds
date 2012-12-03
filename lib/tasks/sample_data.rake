@@ -28,10 +28,11 @@ namespace :db do
     puts "Finished loading schema for development and production."
   end
 
-  desc "Fill database with sample data"
+  desc "Fill database with sample data. Contains two methods, one for populating sensor readings in DynamoDB and the other a relational DB."
   task :populate => [:environment] do
     #Call methods to populate db
     #populate_dynamodb
+    populate_sqldb
     puts "Finished populating the database."
   end
 
@@ -39,8 +40,12 @@ namespace :db do
   task :repopulate => [:migrate_all, :empty, :populate] do
   end
 
-  def populate_dynamodb
 
+  desc "re-populate the database with sample data without migrating"
+  task :repopulate_without_migrate => [:empty, :populate] do
+  end
+
+  def populate_dynamodb
     # create a table (10 read and 5 write capacity units) with the
     # default schema (id string hash key)
     # do nothing if table exists
@@ -77,7 +82,6 @@ namespace :db do
     temp = 290
 
     25.times do
-
       readings << {'id' => id.to_s,
                    'timestamp' => timestamp,
                    'temp' => temp.to_s,
@@ -96,4 +100,132 @@ namespace :db do
     )
 
   end
+
+
+  # populating the relationship data.
+  def populate_sqldb
+
+        # populate Device Agent
+        [{
+            :guid => "sv.cmu.edu.b19.device-agent.5",
+            :network_address => "192.168.0.0",
+            :physical_location => "Bob' Office"
+        }].each do |attributes|
+          DeviceAgent.create(attributes)
+        end
+        bob_linux_agent = DeviceAgent.find_by_guid("sv.cmu.edu.b19.device-agent.5")
+
+        # populate Device Types
+        [
+            {:device_type => "firefly", :version => "", :manufacturer => "CMU"}
+        ].each do |attributes|
+          DeviceType.create(attributes)
+        end
+        firefly_device_type = DeviceType.find_by_device_type("firefly")
+
+
+        # populate Devices
+        [{
+            :guid => "sv.cmu.edu.b19.device.1",
+            # :device_type_id => firefly_device_type.id,
+            :device_agent_id => "",
+            :network_address => "192.168.0.0",
+            :physical_location => "Building 19 - Room 1054"
+        },
+        {
+            :guid => "sv.cmu.edu.b19.device.2",
+            # :device_type_id => firefly_device_type.id,
+            :device_agent_id => "",
+            :network_address => "192.168.1.1",
+            :physical_location => "Building 19 - Room 1055"
+        }].each do |attributes|
+          d = Device.create(attributes)
+          firefly_device_type.devices << d
+          bob_linux_agent.devices << d
+        end
+        firefly_device_1 = Device.find_by_guid("sv.cmu.edu.b19.device.1")
+
+        # populate Sensor Types
+        [   {:property_type => "temperature"},
+            {:property_type => "digital_temperature"},
+            {:property_type => "light"},
+            {:property_type => "pressure"},
+            {:property_type => "humidity"},
+            {:property_type => "motion"},
+            {:property_type => "audio_p2p"},
+            {:property_type => "acc_x"},
+            {:property_type => "acc_y"},
+            {:property_type => "acc_z"}
+        ].each do |attributes|
+          SensorType.create(attributes)
+        end
+        temperature_sensor_type = SensorType.find_by_property_type("temperature")
+
+        # populate Sensors
+        [{
+            :guid => "sv.cmu.edu.b19.sensor.1",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_guid => firefly_device_1.guid,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+            :gps_coord_lat => "37.412251",
+            :gps_coord_long => "-122.058964",
+            :gps_coord_alt => ""
+        },
+        {
+            :guid => "sv.cmu.edu.b19.sensor.2",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_guid => firefly_device_1.guid,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+            :gps_coord_lat => "37.412200",
+            :gps_coord_long => "-122.058900",
+            :gps_coord_alt => ""
+        },
+        {
+            :guid => "sv.cmu.edu.b19.sensor.3",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_guid => firefly_device_1.guid,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+            :gps_coord_lat => "37.412200",
+            :gps_coord_long => "-122.058900",
+            :gps_coord_alt => ""
+        },
+        {
+            :guid => "sv.cmu.edu.b19.sensor.4",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_guid => firefly_device_1.guid,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+            :gps_coord_lat => "37.412200",
+            :gps_coord_long => "-122.058900",
+            :gps_coord_alt => ""
+        },
+        {
+            :guid => "sv.cmu.edu.b19.sensor.5",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_guid => firefly_device_1.guid,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+            :gps_coord_lat => "37.412200",
+            :gps_coord_long => "-122.058900",
+            :gps_coord_alt => ""
+        }].each do |attributes|
+          s = Sensor.create(attributes)
+          firefly_device_1.sensors << s
+        end
+
+
+
+
+  end
+
+
+
 end

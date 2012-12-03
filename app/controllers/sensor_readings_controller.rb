@@ -49,7 +49,7 @@ class SensorReadingsController < ApplicationController
     @sensor_reading_table.batch_write(
         :put => reading_hash
     )
-    
+
     render :text => "Success", :status => 200, :content_type => 'text/html'
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202034527) do
+ActiveRecord::Schema.define(:version => 20121203021657) do
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20121202034527) do
   end
 
   create_table "device_types", :force => true do |t|
-    t.string   "type"
+    t.string   "device_type"
     t.string   "version"
     t.string   "manufacturer"
     t.string   "metadata"
@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20121202034527) do
   end
 
   create_table "sensor_types", :force => true do |t|
-    t.string   "type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "property_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "sensors", :force => true do |t|
