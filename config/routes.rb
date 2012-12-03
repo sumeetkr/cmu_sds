@@ -7,6 +7,6 @@ CmuSds::Application.routes.draw do
   #root :to => 'projects#index'
 
 
-  resources :sensor_readings, :sensors, :devices, :device_agents
+  resources :sensor_readings, :sensors, :devices, :device_agents, :sensor_types, :device_types
   match ':controller(/:action(/:id))(.:format)'
 end

@@ -18,7 +18,7 @@ class DevicesController < ApplicationController
             #redirect_to devices_path
         else
             @device = Device.new
-                respond_to do |format|
+            respond_to do |format|
                 format.html # new.html.erb
                 format.json { render json: @device }
             end

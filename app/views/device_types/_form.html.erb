@@ -1,0 +1,38 @@
+<%= form_for(@device_type) do |f| %>
+    <% if @device_type.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@device_type.errors.count, "error") %> prohibited this device from being registered:</h2>
+
+          <ul>
+            <% @device_type.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <table>
+      <tr>
+        <td class="field" width="50%"><%= f.label :device_type %></td>
+        <td class="field"><%= f.text_field :device_type %></td>
+      </tr>
+      <tr>
+        <td class="field" width="50%"><%= f.label :manufacturer %></td>
+        <td class="field"><%= f.text_field :manufacturer %></td>
+      </tr>
+      <tr>
+        <td class="field" width="50%"><%= f.label :version %></td>
+        <td class="field"><%= f.text_field :version %></td>
+      </tr>
+            <tr>
+        <td class="field" width="50%"><%= f.label :metadata %></td>
+        <td class="field"><%= f.text_field :metadata %></td>
+      </tr>
+      <tr>
+        <td style="text-align: right;" colspan="2">
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+        </td>
+      </tr>
+    </table>
+<% end %>
