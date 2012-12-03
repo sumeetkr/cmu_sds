@@ -1,12 +1,9 @@
 class DevicesController < ApplicationController
-    respond_to :json
+    respond_to :json, :html
 
     def index
         @devices = Device.all
-        respond_with @devices
-    end
-
-    def show
+        respond_with @device_types
     end
 
     def new
@@ -27,28 +24,39 @@ class DevicesController < ApplicationController
 
     def create
       @device = Device.new(params[:device])
-      respond_to do |format|
         if @device.save
-          format.html { redirect_to @device, notice: 'Device was successfully created.' }
-      #    format.json { render json: @device, status: :created, location: @device }
-          format.js
+          flash[:notice] = "Device created successfully !"
+          redirect_to :action => "index"
         else
           format.html { render action: "new" }
-      #    format.json { render json: @device.errors, status: :unprocessable_entity }
+          render "new"
           format.js
         end
-      end
+
     end
 
     def edit
         @device = Device.find(params[:id])
     end
     def update
-
+        @device = Device.find(params[:id])
+        respond_to do |format|
+            if @device.update_attributes(params[:device])
+                flash[:notice] = 'Device  was successfully updated.'
+                format.html { redirect_to :action => "index" }
+                format.json { head :no_content }
+            else
+              format.html { render action: "edit" }
+              format.json { render json: @device.errors, status: :unprocessable_entity }
+            end
+        end
     end
 
     def destroy
-
+        @device = Device.find(params[:id])
+        @device.delete
+        flash[:notice] = "Device deleted successfully !"
+        redirect_to :action => "index"
     end
 
 end

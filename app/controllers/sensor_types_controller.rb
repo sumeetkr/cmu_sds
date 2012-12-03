@@ -47,7 +47,6 @@ class SensorTypesController < ApplicationController
               format.json { render json: @sensor_type.errors, status: :unprocessable_entity }
             end
         end
-
     end
     def destroy
         @sensor_type = SensorType.find(params[:id])
