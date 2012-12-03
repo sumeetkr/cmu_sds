@@ -7,26 +7,39 @@ class SensorReadingsController < ApplicationController
   def index
     readings_json = []
 
-    if params.has_key?(:startTime) && params.has_key?(:endTime)
-      startTime = params[:startTime].to_i
-      endTime = params[:endTime].to_i
-      @sensor_reading_table.items.query(
-          :hash_value => "1",
-          :range_value => startTime..endTime,
-          :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << convertReadingToJson(reading)
-      end
-    else
-      @sensor_reading_table.items.each do |reading|
-        readings_json << convertReadingToJson(reading)
-      end
+    # This is incredibly slow because it gets EVERYTHING.
+    # It is not optimized like the query method.
+    # I did not use query(..) because it requires a hash_value
+    @sensor_reading_table.items.each do |reading|
+      readings_json << convertReadingToJson(reading)
     end
 
     render :json => readings_json
   end
 
   def show
-    render :text => "Hi", :status => 200, :content_type => 'text/html'
+    id = params[:id]
+    readings_json = []
+
+    if params.has_key?(:startTime) && params.has_key?(:endTime)
+      startTime = params[:startTime].to_i
+      endTime = params[:endTime].to_i
+      # The query method requires a hash_value
+      @sensor_reading_table.items.query(
+          :hash_value => id,
+          :range_value => startTime..endTime,
+          :select => [:id, :temp, :timestamp]).each do |reading|
+        readings_json << convertReadingToJson(reading)
+      end
+    else
+      @sensor_reading_table.items.query(
+          :hash_value => id,
+          :select => [:id, :temp, :timestamp]).each do |reading|
+        readings_json << convertReadingToJson(reading)
+      end
+    end
+
+    render :json => readings_json
   end
 
   def create
