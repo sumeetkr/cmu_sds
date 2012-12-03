@@ -11,7 +11,7 @@ class SensorReadingsController < ApplicationController
     # It is not optimized like the query method.
     # I did not use query(..) because it requires a hash_value
     @sensor_reading_table.items.each do |reading|
-      readings_json << convertReadingToJson(reading)
+      readings_json << convert_reading_to_json(reading)
     end
 
     render :json => readings_json
@@ -29,13 +29,13 @@ class SensorReadingsController < ApplicationController
           :hash_value => id,
           :range_value => startTime..endTime,
           :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << convertReadingToJson(reading)
+        readings_json << convert_reading_to_json(reading)
       end
     else
       @sensor_reading_table.items.query(
           :hash_value => id,
           :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << convertReadingToJson(reading)
+        readings_json << convert_reading_to_json(reading)
       end
     end
 
@@ -46,9 +46,13 @@ class SensorReadingsController < ApplicationController
     reading_json = request.body.read
     reading_hash = ActiveSupport::JSON.decode(reading_json)
 
-    @sensor_reading_table.batch_write(
-        :put => reading_hash
-    )
+    if (reading_hash.is_a? Array)
+      @sensor_reading_table.batch_write(
+          :put => reading_hash
+      )
+    else
+      @sensor_reading_table.items.create(reading_hash)
+    end
 
     render :text => "Success", :status => 200, :content_type => 'text/html'
   end
@@ -61,7 +65,7 @@ class SensorReadingsController < ApplicationController
 
   private
 
-  def convertReadingToJson(reading)
+  def convert_reading_to_json(reading)
     {:id => reading.attributes["id"],
      :temp => reading.attributes["temp"],
      :timestamp => reading.attributes["timestamp"]
