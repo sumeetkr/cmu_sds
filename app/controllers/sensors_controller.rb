@@ -1,6 +1,7 @@
 class SensorsController < ApplicationController
 
     def new
+        @sensor_types = SensorType.all
         if (!params[:guid].blank? && !params[:device_id].blank?)
             @sensor = Sensor.new(:guid => params[:guid], :device_id => params[:device_id])
             @sensor.sensor_type_id = params[:sensor_type_id] unless params[:sensor_type_id].blank?
@@ -40,6 +41,7 @@ class SensorsController < ApplicationController
 
     def edit
         @sensor = Sensor.find(params[:id])
+        @sensor_types = SensorType.all
     end
 
 end
