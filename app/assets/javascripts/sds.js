@@ -29,7 +29,7 @@ SDS.chart.prototype = {
 
         var parts = this.sensorName.split(".");
         if (parts.length > 0) {
-            var sensorId = parts[parts.length - 1];
+            var sensorId = parts[0];
         }
         else {
             var sensorId = 1;
@@ -94,7 +94,7 @@ SDS.chart.prototype = {
                 },
                 yaxis: {
                     renderer: $.jqplot.LogAxisRenderer,
-                    tickOptions:{prefix: '?'}
+                    tickOptions:{prefix: 'f'}
                 }
             },
 
@@ -116,16 +116,16 @@ SDS.chart.prototype = {
         for (var i = 0; i < rawData.length; i++) {
             var element = rawData[i];
             var temp = parseInt(element["temp"]);
-            if (temp < 300) {
+            if (temp < 60) {
                 below300++;
             }
-            else if (temp >= 300 && temp < 400) {
+            else if (temp >= 60 && temp < 70) {
                 between300and400++;
             }
-            else if (temp >= 400 && temp < 500) {
+            else if (temp >= 70 && temp < 80) {
                 between400and500++;
             }
-            else if (temp >= 500 && temp < 600) {
+            else if (temp >= 80 && temp < 90) {
                 between500and600++;
             }
             else {
@@ -134,8 +134,8 @@ SDS.chart.prototype = {
         }
 
         var data = [
-            ['< 300', below300],['300 - 400', between300and400], ['400 - 500', between400and500],
-            ['500 - 600', between500and600],['> 600', above600]
+            ['< 60', below300],['60 - 70', between300and400], ['70 - 80', between400and500],
+            ['80 - 90', between500and600],['> 90', above600]
         ];
         var plot1 = jQuery.jqplot ('chart', [data],
             {
