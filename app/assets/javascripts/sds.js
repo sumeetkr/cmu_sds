@@ -116,16 +116,16 @@ SDS.chart.prototype = {
         for (var i = 0; i < rawData.length; i++) {
             var element = rawData[i];
             var temp = parseInt(element["temp"]);
-            if (temp < 300) {
+            if (temp < 400) {
                 below300++;
             }
-            else if (temp >= 300 && temp < 400) {
+            else if (temp >= 400 && temp < 430) {
                 between300and400++;
             }
-            else if (temp >= 400 && temp < 500) {
+            else if (temp >= 430 && temp < 460) {
                 between400and500++;
             }
-            else if (temp >= 500 && temp < 600) {
+            else if (temp >= 460 && temp < 490) {
                 between500and600++;
             }
             else {
