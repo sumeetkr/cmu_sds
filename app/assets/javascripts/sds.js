@@ -29,7 +29,7 @@ SDS.chart.prototype = {
 
         var parts = this.sensorName.split(".");
         if (parts.length > 0) {
-            var sensorId = parts[parts.length - 1];
+            var sensorId = parts[0];
         }
         else {
             var sensorId = 1;
