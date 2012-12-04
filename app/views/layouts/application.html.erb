@@ -54,6 +54,23 @@
           <button id="submit" type="button" class="btn btn-primary">Check it out!</button>
         </div>
       </div>
+      <div>
+        <div class="links">
+          <%= link_to "Sensors", sensors_path %>
+        </div>
+        <div class="links">
+          <%= link_to "Devices", devices_path %>
+        </div>
+        <div class="links">
+          <%= link_to "Device Agents", device_agents_path %>
+        </div>
+        <div class="links">
+          <%= link_to "Sensor Types", sensor_types_path %>
+        </div>
+        <div class="links">
+          <%= link_to "Device Types", device_types_path %>
+        </div>
+      </div>
     </div>
     <div class="span11">
       <%= yield %>

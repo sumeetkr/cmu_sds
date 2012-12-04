@@ -52,6 +52,15 @@
   color: #FFF;
 }
 
+.left-part {
+  overflow: scroll;
+}
+
 .hidden {
   display: none;
+}
+
+.links {
+  float: left;
+  clear: both;
 }

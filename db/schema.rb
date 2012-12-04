@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(:version => 20121203232743) do
     t.string   "version"
     t.string   "manufacturer"
     t.string   "metadata_json"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "default_config"
   end
 
   create_table "devices", :force => true do |t|
