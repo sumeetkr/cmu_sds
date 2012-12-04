@@ -26,6 +26,49 @@ class DevicesController < ApplicationController
     def create
       @device = Device.new(params[:device])
         if @device.save
+
+          # pre-populate sensors for firefly device
+          if @device.device_type_id == "1"   # firefly_v2 has an id of 1
+            temp_device_guid = @device.guid
+            @device.guid = @device.id.to_s << "." << @device.guid << ".device.sv.cmu.edu"
+
+            # iterate through Sensor Types
+            #dt = DeviceType.find_by_id(1)
+            #default_sensor_config = JSON.parse(dt.default_config)
+
+            # replace with property_type
+            ["Temperature",
+             "Digital Temperature",
+             "Light",
+             "Pressure",
+             "Humidity",
+             "Motion",
+             "Audio P2P",
+             "Accelerometer x",
+             "Accelerometer y",
+             "Accelerometer z"
+            ].each do |pt|
+              # find Sensor type with property pt
+              st = SensorType.find_by_property_type(pt)
+              # create Sensor with this Sensor Type
+              [{
+                   :guid => ".sensor.sv.cmu.edu",
+                   :sensor_type_id => st.id,
+                   :device_guid => @device.guid,
+                   :device_id => @device.id
+               }].each do |attributes|
+                s = Sensor.create(attributes)
+                s.guid = s.id.to_s << "." << temp_device_guid << s.guid
+                s.save
+                # add this Sensor to the Sensor Type
+                st.sensors << s
+                # add Sensor to the device
+                @device.sensors << s
+              end
+            end
+            @device.save
+          end
+
           flash[:notice] = "Device created successfully !"
           redirect_to :action => "index"
         else
@@ -44,6 +87,7 @@ class DevicesController < ApplicationController
         @device = Device.find(params[:id])
         respond_to do |format|
             if @device.update_attributes(params[:device])
+                @device.guid = @device.id.to_s << "." << @device.guid << ".device.sv.cmu.edu"
                 flash[:notice] = 'Device  was successfully updated.'
                 format.html { redirect_to :action => "index" }
                 format.json { head :no_content }
