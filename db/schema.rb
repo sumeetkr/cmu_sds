@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203232257) do
+ActiveRecord::Schema.define(:version => 20121203232743) do
+
+  create_table "conversions", :force => true do |t|
+    t.integer  "device_type_id"
+    t.string   "quantity"
+    t.text     "description"
+    t.string   "conversion_type"
+    t.float    "a"
+    t.float    "b"
+    t.string   "chart_min"
+    t.string   "chart_max"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"

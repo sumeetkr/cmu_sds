@@ -72,4 +72,11 @@ class SensorReadingsController < ApplicationController
     }
   end
 
+  def convert(x, type)
+    # Use Rails Conversion entity to retrieve conversion data (a, b) for the given type
+    a = 5
+    b = 3
+    return a * x + b
+  end
+
 end
