@@ -28,7 +28,7 @@ class DevicesController < ApplicationController
         if @device.save
 
           # pre-populate sensors for firefly device
-          if @device.device_type_id == "Firefly_v2"   # firefly_v2 has an id of 1
+          if @device.device_type_id == "1"   # firefly_v2 has an id of 1
             temp_device_guid = @device.guid
             @device.guid = @device.id.to_s << "." << @device.guid << ".device.sv.cmu.edu"
 
