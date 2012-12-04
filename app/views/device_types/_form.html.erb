@@ -23,9 +23,13 @@
         <td class="field" width="50%"><%= f.label :version %></td>
         <td class="field"><%= f.text_field :version %></td>
       </tr>
-            <tr>
+      <tr>
         <td class="field" width="50%"><%= f.label :metadata_json %></td>
         <td class="field"><%= f.text_field :metadata_json %></td>
+      </tr>
+      <tr>
+        <td class="field" width="50%"><%= f.label :default_configuration %></td>
+        <td class="field"><%= f.text_area :default_config, :rows => '5' %></td>
       </tr>
       <tr>
         <td style="text-align: right;" colspan="2">

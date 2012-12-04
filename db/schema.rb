@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203021657) do
+ActiveRecord::Schema.define(:version => 20121203232257) do
 
   create_table "device_agents", :force => true do |t|
     t.string   "guid"
@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(:version => 20121203021657) do
     t.string   "version"
     t.string   "manufacturer"
     t.string   "metadata_json"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "default_config"
   end
 
   create_table "devices", :force => true do |t|
