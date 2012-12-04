@@ -32,7 +32,8 @@ namespace :db do
   task :populate => [:environment] do
     #Call methods to populate db
     #populate_dynamodb
-    populate_sqldb
+    #populate_sqldb
+    populate_conversions_table
     puts "Finished populating the database."
   end
 
@@ -230,8 +231,18 @@ namespace :db do
       firefly_device_1.sensors << s
     end
 
-
   end
 
+  def populate_conversions_table
+    Conversion.create(
+        :device_type_id => 1,
+        :quantity => "temp",
+        :description => "Temperature (analog sensor, F)",
+        :conversion_type => "linear",
+        :a => 0.07506,
+        :b => 32,
+        :chart_min => 60,
+        :chart_max => 80)
+  end
 
 end
