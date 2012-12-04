@@ -5,21 +5,21 @@ class SensorReadingsController < ApplicationController
   before_filter :initialize_dynmodb
 
   def index
-    readings_json = []
+    json_array = []
 
     # This is incredibly slow because it gets EVERYTHING.
     # It is not optimized like the query method.
     # I did not use query(..) because it requires a hash_value
     @sensor_reading_table.items.each do |reading|
-      readings_json << convert_reading_to_json(reading)
+      process_reading(json_array, reading)
     end
 
-    render :json => readings_json
+    render :json => json_array
   end
 
   def show
     id = params[:id]
-    readings_json = []
+    json_array = []
 
     if !params[:startTime].blank? && !params[:endTime].blank?
       startTime = params[:startTime].to_i
@@ -29,17 +29,17 @@ class SensorReadingsController < ApplicationController
           :hash_value => id,
           :range_value => startTime..endTime,
           :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << convert_reading_to_json(reading)
+        process_reading(json_array, reading)
       end
     else
       @sensor_reading_table.items.query(
           :hash_value => id,
           :select => [:id, :temp, :timestamp]).each do |reading|
-        readings_json << convert_reading_to_json(reading)
+        process_reading(json_array, reading)
       end
     end
 
-    render :json => readings_json
+    render :json => json_array
   end
 
   def create
@@ -65,18 +65,32 @@ class SensorReadingsController < ApplicationController
 
   private
 
+  def process_reading(json_array, reading)
+    run_conversions(reading)
+    json_array << convert_reading_to_json(reading)
+  end
+
+  def run_conversions(reading)
+    ["temp"].each do |type|
+      value = reading.attributes[type]
+      reading.attributes[type] = convert(value, type)
+    end
+  end
+
+  def convert(x, type)
+    # 'x' must be an integer to be used in equations
+    x = x.to_i
+    conversion = Conversion.find_by_quantity(type)
+    a = conversion.a
+    b = conversion.b
+    return a * x + b
+  end
+
   def convert_reading_to_json(reading)
     {:id => reading.attributes["id"],
      :temp => reading.attributes["temp"],
      :timestamp => reading.attributes["timestamp"]
     }
-  end
-
-  def convert(x, type)
-    # Use Rails Conversion entity to retrieve conversion data (a, b) for the given type
-    a = 5
-    b = 3
-    return a * x + b
   end
 
 end
