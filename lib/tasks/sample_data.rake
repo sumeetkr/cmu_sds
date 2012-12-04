@@ -32,7 +32,7 @@ namespace :db do
   task :populate => [:environment] do
     #Call methods to populate db
     #populate_dynamodb
-    #populate_sqldb
+    populate_sqldb
     populate_conversions_table
     puts "Finished populating the database."
   end
