@@ -195,7 +195,7 @@ SDS.loadSensor = function() {
 
 (function($) {
     var pathname = window.location.pathname;
-    if (pathname == "" || pathname == "/") {
+    if (pathname == "/dashboard") {
         $(".left-part").removeClass("hidden");
         SDS.loadSensor();
     }

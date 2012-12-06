@@ -4,6 +4,8 @@ CmuSds::Application.routes.draw do
   # first created -> highest priority.
   root :to => 'home#index'
 
+  match 'dashboard' => 'home#dashboard', :as => "dashboard"
+
   #root :to => 'projects#index'
 
 

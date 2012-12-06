@@ -16,11 +16,19 @@
 @import "twitter/bootstrap";
 
 .main-div {
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 .inner {
   margin: 0 20px 0 20px;
+}
+
+body {
+  background: #E2E2E2;
+}
+
+img {
+  margin: 0;
 }
 
 #header {
@@ -28,8 +36,13 @@
   color: #FFF;
 }
 
+#hero {
+  margin: 0 auto;
+  width: 1011px;
+}
+
 #main-div {
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 .sensor-tree-div {
@@ -60,4 +73,80 @@
 .links {
   float: left;
   clear: both;
+}
+
+
+#slogan {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#slogan h2 {
+  font-size: 26px;
+  line-height: 1.33333333333333em;
+  color: #343433;
+  font-weight: bold;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.intro {
+  display: block;
+  width: 100%;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.intro {
+  background-color: #EEE;
+}
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix::before, .clearfix::after {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+.clearfix::before, .clearfix::after {
+  content: "";
+  display: table;
+}
+
+.limiter {
+  max-width: 1125px;
+  margin: 0 auto;
+}
+
+.intro .item {
+  width: 33%;
+  float: left;
+  padding: 0;
+}
+
+.home .intro .item {
+  padding: 1.5em 6.25%;
+  border-bottom: 1px solid #EEE;
+}
+
+.intro a {
+  display: block;
+  padding: 32px 0;
+  margin: 0 46px;
+  text-decoration: none;
+  color: black;
+}
+
+.title-link a {
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  margin-top: 60px;
 }
