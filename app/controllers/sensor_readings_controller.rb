@@ -11,7 +11,12 @@ class SensorReadingsController < ApplicationController
     # It is not optimized like the query method.
     # I did not use query(..) because it requires a hash_value
     @sensor_reading_table.items.each do |reading|
-      process_reading(json_array, reading)
+      run_conversions(reading)
+      json_array << {
+          :id => id,
+          :temp => reading.attributes["temp"],
+          :timestamp => reading.attributes["timestamp"]
+      }
     end
 
     render :json => json_array
@@ -19,8 +24,8 @@ class SensorReadingsController < ApplicationController
 
   def show
     id = params[:id]
-    start_time = params[:startTime].to_i
-    end_time = params[:endTime].to_i
+    start_time = params[:start_time].to_i
+    end_time = params[:end_time].to_i
     number_of_tuples = params[:tuples].to_i
 
     if !start_time.blank? && !end_time.blank?
@@ -35,38 +40,40 @@ class SensorReadingsController < ApplicationController
           :select => [:id, :temp, :timestamp])
     end
 
+    # Convert the Enumerator to an Array so that we can index into it.
+    # Enumerator.find(id) returns another Enumerator that does not
+    # have the expected 'attributes' hash
+    readings = readings.to_a
+
+    readings.each do |reading|
+      run_conversions(reading)
+    end
+
     json_array = []
 
     if !number_of_tuples.blank?
-
-      temp_values = []
-      readings.each do |reading|
-        run_conversions(reading)
-        temp_values << reading.attributes["temp"]
-      end
-
       number_of_readings = readings.count
       readings_per_tuple = (number_of_readings / number_of_tuples).to_i
-
-      number_of_tuples.times do |tuple_index|
-        start_index = tuple_index * readings_per_tuple
-        end_index = start_index + readings_per_tuple
-        tuple_values = temp_values[start_index..end_index]
-        json_array << {
-            :id => id,
-            :timestamp => average([start_time, end_time]),
-            :first => tuple_values.first,
-            :last => tuple_values.last,
-            :min => tuple_values.min,
-            :max => tuple_values.max,
-            :average => average(tuple_values)
-        }
-
+      if readings_per_tuple > 0
+        number_of_tuples.times do |tuple_index|
+          start_index = tuple_index * readings_per_tuple
+          end_index = start_index + readings_per_tuple
+          tuple_readings = readings[start_index..end_index]
+          tuple_timestamps = tuple_readings.collect { |r| r.attributes["timestamp"] }
+          tuple_temp_readings = tuple_readings.collect { |r| r.attributes["temp"] }
+          json_array << {
+              :id => id,
+              :average_timestamp => tuple_timestamps.average,
+              :first => tuple_temp_readings.first,
+              :last => tuple_temp_readings.last,
+              :min => tuple_temp_readings.min,
+              :max => tuple_temp_readings.max,
+              :average => tuple_temp_readings.average
+          }
+        end
       end
-
     else
       readings.each do |reading|
-        run_conversions(reading)
         json_array << {
             :id => id,
             :temp => reading.attributes["temp"],
@@ -74,7 +81,7 @@ class SensorReadingsController < ApplicationController
         }
       end
     end
-
+    
     render :json => json_array
   end
 
@@ -100,10 +107,6 @@ class SensorReadingsController < ApplicationController
   end
 
   private
-
-  def average(array)
-    array.sum / array.length
-  end
 
   def run_conversions(reading)
     ["temp"].each do |type|
