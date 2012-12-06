@@ -1,0 +1,32 @@
+<div id="main-div" class="container-fluid">
+  <div class="span3 left">
+    <div class="left-part hidden">
+      <div class="sensor-tree-div">
+        <h5>Sensor Tree</h5>
+        <div id="sensor-tree">
+        </div>
+      </div>
+      <div>
+        <span class="help-inline">Chart type: </span>
+        <select id="chartType">
+          <option>Line</option>
+          <option>Pie</option>
+        </select>
+      </div>
+      <div>
+        <span class="help-inline">Start from: </span>
+        <input id="startDate" type="text" class="datepicker">
+      </div>
+      <div>
+        <span class="help-inline">End to:</span>
+        <input id="endDate" type="text" class="datepicker">
+      </div>
+      <div>
+        <button id="submit" type="button" class="btn btn-primary">Check it out!</button>
+      </div>
+    </div>
+  </div>
+  <div class="span11">
+    <div id="chart"/>
+  </div>
+</div>
