@@ -28,7 +28,7 @@ class SensorReadingsController < ApplicationController
     end_time = params[:end_time].to_i
     number_of_tuples = params[:tuples].to_i
 
-    if !start_time.blank? && !end_time.blank?
+    if end_time > 0
       # The query method requires a hash_value
       readings = @sensor_reading_table.items.query(
           :hash_value => id,
@@ -51,7 +51,7 @@ class SensorReadingsController < ApplicationController
 
     json_array = []
 
-    if !number_of_tuples.blank? && number_of_tuples > 0
+    if number_of_tuples > 0
       number_of_readings = readings.count
       readings_per_tuple = (number_of_readings / number_of_tuples).to_i
       if readings_per_tuple > 0
