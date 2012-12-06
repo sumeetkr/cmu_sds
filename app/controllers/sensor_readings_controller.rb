@@ -51,7 +51,7 @@ class SensorReadingsController < ApplicationController
 
     json_array = []
 
-    if !number_of_tuples.blank?
+    if !number_of_tuples.blank? && number_of_tuples > 0
       number_of_readings = readings.count
       readings_per_tuple = (number_of_readings / number_of_tuples).to_i
       if readings_per_tuple > 0
@@ -81,7 +81,7 @@ class SensorReadingsController < ApplicationController
         }
       end
     end
-    
+
     render :json => json_array
   end
 
