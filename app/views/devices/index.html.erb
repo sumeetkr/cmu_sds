@@ -5,20 +5,20 @@
 
     <table class="table">
         <tr>
-            <td>guid</td>
-            <td>device_type_id</td>
+            <td>Device URI</td>
+            <td>Device Type</td>
             <td>network_address</td>
             <td>physical_location</td>
-            <td>device_agent_guid</td>
             <td colspan='2'>Actions</td>
         </tr>
         <% @devices.each do |device| %>
         <tr>
-            <td><%= device.guid %></td>
-            <td><%= device.device_type_id %></td>
+            <td><%= link_to device.uri, edit_device_path(device) %></td>
+            <td><%= device.device_type.device_type %></td>
             <td><%= device.network_address %></td>
-            <td><%= device.physical_location %></td>
-            <td><%= device.device_agent_guid %></td>
+            <td><% unless device.location.blank? %>
+                <%= "lat: #{device.location.lat}" unless device.location.lat.nil? %><%= ", lon: #{device.location.lon}" unless device.location.lon.nil? %><%= ", alt: #{device.location.alt}" unless device.location.alt.nil? %>
+            <% end %></td>
             <td><%= link_to 'Edit', edit_device_path(device) %></td>
             <td><%= link_to 'Delete', device, confirm: 'Are you sure?', method: :delete %></td>
         </tr>

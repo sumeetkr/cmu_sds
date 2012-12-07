@@ -1,0 +1,26 @@
+<% @page_title = "| Device | List" %>
+
+<h1 style="text-align: left;">List of Devices</h1>
+
+    <table class="table">
+        <tr>
+            <td>Latitude</td>
+            <td>Longitude</td>
+            <td>Altitude</td>
+            <td>physical_location</td>
+            <td>device_agent_guid</td>
+            <td colspan='2'>Actions</td>
+        </tr>
+        <% @locations.each do |location| %>
+        <tr>
+            <td><%= location.lat %></td>
+            <td><%= location.lon %></td>
+            <td><%= location.alt %></td>
+            <td><%=  %></td>
+            <td><%= link_to 'Edit', edit_location_path(location) %></td>
+            <td><%= link_to 'Delete', location, confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+        <% end %>
+    </table>
+
+<%= link_to 'New', new_device_path %> | <%= link_to 'Back', root_path %>

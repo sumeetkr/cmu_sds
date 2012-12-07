@@ -117,13 +117,13 @@ namespace :db do
 
     # populate Device Agent
     [{
-         :guid => "1.b19.device-agent.sv.cmu.edu",
+         :uri => "1.b19.device-agent.sv.cmu.edu",
          :network_address => "192.168.0.0",
-         :physical_location => "Bob' Office"
+         :print_name => "Bob's Office"
      }].each do |attributes|
       DeviceAgent.create(attributes)
     end
-    bob_linux_agent = DeviceAgent.find_by_guid("1.b19.device-agent.sv.cmu.edu")
+    bob_linux_agent = DeviceAgent.find_by_uri("1.b19.device-agent.sv.cmu.edu")
 
     # populate Device Types
     [
@@ -136,24 +136,22 @@ namespace :db do
 
     # populate Devices
     [{
-         :guid => "1.b19.device.sv.cmu.edu",
+         :uri => "1.b19.device.sv.cmu.edu",
          # :device_type_id => firefly_device_type.id,
-         :device_agent_id => "",
          :network_address => "192.168.0.0",
-         :physical_location => "Building 19 - Room 1054"
+         :print_name => "Building 19 - Room 1054"
      },
      {
-         :guid => "2.b19.device.sv.cmu.edu",
+         :uri => "2.b19.device.sv.cmu.edu",
          # :device_type_id => firefly_device_type.id,
-         :device_agent_id => "",
          :network_address => "192.168.1.1",
-         :physical_location => "Building 19 - Room 1055"
+         :print_name => "Building 19 - Room 1055"
      }].each do |attributes|
       d = Device.create(attributes)
       firefly_device_type.devices << d
       bob_linux_agent.devices << d
     end
-    firefly_device_1 = Device.find_by_guid("1.b19.device.sv.cmu.edu")
+    firefly_device_1 = Device.find_by_uri("1.b19.device.sv.cmu.edu")
 
     # populate Sensor Types
     [{:property_type => "Temperature"},
@@ -173,60 +171,47 @@ namespace :db do
 
     # populate Sensors
     [{
-         :guid => "1.sensor.b19.sv.cmu.edu",
+         :uri => "1.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
-         :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
          :min_value => "",
-         :max_value => "",
-         :gps_coord_lat => "37.412251",
-         :gps_coord_long => "-122.058964",
-         :gps_coord_alt => ""
+         :max_value => ""
      },
      {
-         :guid => "2.sensor.b19.sv.cmu.edu",
+         :uri => "2.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
-         :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
          :min_value => "",
-         :max_value => "",
-         :gps_coord_lat => "37.412200",
-         :gps_coord_long => "-122.058900",
-         :gps_coord_alt => ""
+         :max_value => ""
      },
      {
-         :guid => "3.sensor.b19.sv.cmu.edu",
+         :uri => "3.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
-         :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
          :min_value => "",
-         :max_value => "",
-         :gps_coord_lat => "37.412200",
-         :gps_coord_long => "-122.058900",
-         :gps_coord_alt => ""
+         :max_value => ""
      },
      {
-         :guid => "4.sensor.b19.sv.cmu.edu",
+         :uri => "4.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
-         :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
          :min_value => "",
          :max_value => "",
-         :gps_coord_lat => "37.412200",
-         :gps_coord_long => "-122.058900",
-         :gps_coord_alt => ""
      },
      {
-         :guid => "23100016.sensor.b19.sv.cmu.edu",
+         :uri => "5.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
-         :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
          :min_value => "",
          :max_value => "",
-         :gps_coord_lat => "37.412200",
-         :gps_coord_long => "-122.058900",
-         :gps_coord_alt => ""
-     }].each do |attributes|
+     },
+        {
+            :uri => "23100016.sensor.b19.sv.cmu.edu",
+            :sensor_type_id => temperature_sensor_type.id,
+            :device_id => firefly_device_1.id,
+            :min_value => "",
+            :max_value => "",
+        }].each do |attributes|
       s = Sensor.create(attributes)
       firefly_device_1.sensors << s
     end

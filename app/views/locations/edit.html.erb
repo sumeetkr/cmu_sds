@@ -1,0 +1,18 @@
+<% @page_title = "| Location | Edit" %>
+
+<h1 style="text-align: left;">Edit Location Information</h1>
+<%= render 'form' %>
+	<h2>Sensors for this device:</h2>
+		<table class="field" width="50%">
+		<thead>
+			<tr>
+				<td><u>Child Sensors</u></td>
+				<td><u>Sensor Type</u></td>
+		<% @locations.each do |location| %>
+			<tr>
+				<td><%= link_to location.device.guid, edit_device_path(location.device) %></td>
+				<td><%=  %></td>
+			</tr>
+		<% end %>
+	</table><br />
+<%= link_to 'Back', devices_path %>
