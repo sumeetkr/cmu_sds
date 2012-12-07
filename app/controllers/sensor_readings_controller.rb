@@ -4,23 +4,23 @@ class SensorReadingsController < ApplicationController
   respond_to :html, :json
   before_filter :initialize_dynmodb
 
-  def index
-    json_array = []
-
-    # This is incredibly slow because it gets EVERYTHING.
-    # It is not optimized like the query method.
-    # I did not use query(..) because it requires a hash_value
-    @sensor_reading_table.items.each do |reading|
-      run_conversions(reading)
-      json_array << {
-          :id => id,
-          :temp => reading.attributes["temp"],
-          :timestamp => reading.attributes["timestamp"]
-      }
-    end
-
-    render :json => json_array
-  end
+  #def index
+  #  json_array = []
+  #
+  #  # This is incredibly slow because it gets EVERYTHING.
+  #  # It is not optimized like the query method.
+  #  # I did not use query(..) because it requires a hash_value
+  #  @sensor_reading_table.items.each do |reading|
+  #    run_conversions(reading)
+  #    json_array << {
+  #        :id => id,
+  #        :temp => reading.attributes["temp"],
+  #        :timestamp => reading.attributes["timestamp"]
+  #    }
+  #  end
+  #
+  #  render :json => json_array
+  #end
 
   def show
     id = params[:id]
