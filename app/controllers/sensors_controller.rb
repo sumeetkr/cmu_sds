@@ -8,6 +8,7 @@ class SensorsController < ApplicationController
 
     def new
         @sensor_types = SensorType.all
+        @location = Location.new
         if (!params[:guid].blank? && !params[:device_id].blank?)
             @sensor = Sensor.new(:guid => params[:guid], :device_id => params[:device_id])
             @sensor.sensor_type_id = params[:sensor_type_id] unless params[:sensor_type_id].blank?
@@ -37,6 +38,7 @@ class SensorsController < ApplicationController
     end
     def edit
         @sensor = Sensor.find(params[:id])
+        @location = @sensor.location
         @sensor_types = SensorType.all
     end
 
@@ -61,4 +63,7 @@ class SensorsController < ApplicationController
         redirect_to :action => "index"
     end
 
+    def show
+        redirect_to :action => 'edit'
+    end
 end

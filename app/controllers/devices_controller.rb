@@ -6,11 +6,33 @@ class DevicesController < ApplicationController
         respond_with @devices
     end
 
+    def get_devices
+        @devices = Device.all
+        device_hash = @devices.collect { |d|
+          loc = {}
+          if d.location.nil?
+            loc = {:lat => '', :lon => '', :alt => ''}
+          else
+            loc[:lat] = d.location.lat.nil? ? nil : d.location.lat
+            loc[:lon] = d.location.lon.nil? ? nil : d.location.lon
+            loc[:alt] = d.location.alt.nil? ? nil : d.location.alt
+          end
+          Hash[
+            :guid => d.guid,
+            :uri => d.uri,
+            :print_name => d.print_name,
+            :location => loc,
+            :sensors => d.sensors.collect{|s| Hash[s.guid => s.sensor_type.property_type]}
+          ]
+        }
+        respond_with device_hash
+    end
+
     def new
+        @location = Location.new
         @device_types = DeviceType.all
         if (!params[:guid].blank? && !params[:device_type_id].blank?)   # && !params[:physical_location].nil? && !params[:network_address].nil?)
             @device = Device.new(:guid => params[:guid], :device_type_id => params[:device_type_id])
-            @device.physical_location = params[:physical_location] unless params[:physical_location].blank?
             @device.network_address = params[:network_address] unless params[:network_address].blank?
             @device.save
             #redirect_to devices_path
@@ -80,9 +102,15 @@ class DevicesController < ApplicationController
     end
 
     def edit
-        @device_types = DeviceType.all
         @device = Device.find(params[:id])
+        @location = Location.new
+        unless @device.location.nil?
+          @location = @device.location
+        end
+        @device_types = DeviceType.all
+        @sensors = @device.sensors
     end
+
     def update
         @device = Device.find(params[:id])
         respond_to do |format|
@@ -103,6 +131,10 @@ class DevicesController < ApplicationController
         @device.delete
         flash[:notice] = "Device deleted successfully !"
         redirect_to :action => "index"
+    end
+
+    def show
+        redirect_to :action => "edit"
     end
 
 end

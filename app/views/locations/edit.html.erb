@@ -1,6 +1,6 @@
-<% @page_title = "| Devices | Edit" %>
+<% @page_title = "| Location | Edit" %>
 
-<h1 style="text-align: left;">Edit Device Information</h1>
+<h1 style="text-align: left;">Edit Location Information</h1>
 <%= render 'form' %>
 	<h2>Sensors for this device:</h2>
 		<table class="field" width="50%">
@@ -8,10 +8,10 @@
 			<tr>
 				<td><u>Child Sensors</u></td>
 				<td><u>Sensor Type</u></td>
-		<% @sensors.each do |sensor| %>
+		<% @locations.each do |location| %>
 			<tr>
-				<td><%= link_to sensor.guid, edit_sensor_path(sensor) %></td>
-				<td><%= sensor.sensor_type.property_type %></td>
+				<td><%= link_to location.device.guid, edit_device_path(location.device) %></td>
+				<td><%=  %></td>
 			</tr>
 		<% end %>
 	</table><br />

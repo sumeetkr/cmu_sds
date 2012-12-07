@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203232743) do
+ActiveRecord::Schema.define(:version => 20121207000407) do
 
   create_table "conversions", :force => true do |t|
     t.integer  "device_type_id"
@@ -27,14 +27,16 @@ ActiveRecord::Schema.define(:version => 20121203232743) do
   end
 
   create_table "device_agents", :force => true do |t|
-    t.string   "guid"
+    t.string   "uri"
     t.string   "metadata_json"
     t.string   "network_address"
-    t.string   "physical_location"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "print_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "device_id"
     t.string   "device_guid"
+    t.integer  "location_id"
+    t.string   "guid"
   end
 
   create_table "device_agents_devices", :force => true do |t|
@@ -53,16 +55,31 @@ ActiveRecord::Schema.define(:version => 20121203232743) do
   end
 
   create_table "devices", :force => true do |t|
-    t.string   "guid"
+    t.string   "uri"
     t.string   "device_type_id"
     t.string   "metadata_json"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "network_address"
-    t.string   "physical_location"
     t.integer  "sensor_id"
     t.integer  "device_agent_id"
     t.string   "device_agent_guid"
+    t.string   "print_name"
+    t.integer  "location_id"
+    t.string   "guid"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "alt"
+    t.string   "format"
+    t.string   "lat"
+    t.string   "lon"
+    t.string   "print_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "device_id"
+    t.integer  "sensor_id"
+    t.integer  "device_agent_id"
   end
 
   create_table "sensor_readings", :force => true do |t|
@@ -83,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20121203232743) do
   end
 
   create_table "sensors", :force => true do |t|
-    t.string   "guid"
+    t.string   "uri"
     t.string   "metadata_json"
     t.string   "sensor_type_id"
     t.integer  "min_value"
@@ -96,6 +113,8 @@ ActiveRecord::Schema.define(:version => 20121203232743) do
     t.integer  "gps_coord_lat"
     t.integer  "gps_coord_long"
     t.integer  "gps_coord_alt"
+    t.integer  "location_id"
+    t.string   "guid"
   end
 
   create_table "users", :force => true do |t|

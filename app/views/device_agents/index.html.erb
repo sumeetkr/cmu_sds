@@ -6,14 +6,14 @@
         <tr>
             <td>guid</td>
             <td>network_address</td>
-            <td>physical_location</td>
+            <td>print_name</td>
             <td colspan='2'>Actions</td>
         </tr>
         <% @device_agents.each do |device_agent| %>
         <tr>
             <td><%= device_agent.guid %></td>
             <td><%= device_agent.network_address %></td>
-            <td><%= device_agent.physical_location %></td>
+            <td><%= device_agent.print_name %></td>
             <td><%= link_to 'Edit', edit_device_agent_path(device_agent) %></td>
             <td><%= link_to 'Delete', device_agent, confirm: 'Are you sure?', method: :delete %></td>
         </tr>

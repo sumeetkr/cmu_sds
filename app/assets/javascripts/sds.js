@@ -172,13 +172,13 @@ SDS.loadSensor = function() {
             for (var i = 0; i < rawData.length; i++) {
                 var element = rawData[i];
                 var device = {
-                    label: element.guid,
+                    label: element.uri,
                     children: []
                 };
                 for (var j = 0; j < element.sensors.length; j++) {
                     var sensorElement = element.sensors[j];
                     var sensor = {
-                        label: sensorElement.guid
+                        label: sensorElement.uri
                     };
                     device.children.push(sensor);
                 }

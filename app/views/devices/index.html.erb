@@ -16,7 +16,11 @@
             <td><%= device.guid %></td>
             <td><%= device.device_type_id %></td>
             <td><%= device.network_address %></td>
-            <td><%= device.physical_location %></td>
+            <td><% unless device.location.blank? %>
+                <% str = "" %>
+                <% str = "#{device.location.lat}, #{device.location.lon}" unless (device.location.lat.nil? || device.location.lat.nil?) %>
+                <%= link_to str, edit_location_path(device.location) %>
+            <% end %></td>
             <td><%= device.device_agent_guid %></td>
             <td><%= link_to 'Edit', edit_device_path(device) %></td>
             <td><%= link_to 'Delete', device, confirm: 'Are you sure?', method: :delete %></td>

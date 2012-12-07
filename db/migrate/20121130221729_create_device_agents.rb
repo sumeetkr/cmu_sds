@@ -4,7 +4,7 @@ class CreateDeviceAgents < ActiveRecord::Migration
         t.string :guid
         t.string :metadata
         t.string :network_address
-        t.string :physical_location
+        t.string :device_name
         t.timestamps
     end
   end
