@@ -127,12 +127,23 @@ namespace :db do
 
     # populate Device Types
     [
-        {:device_type => "Firefly_v2", :version => "", :manufacturer => "CMU"}
+        {:device_type => "Firefly_v2", :version => "", :manufacturer => "CMU",
+        :default_config =>
+            "{\"property_type\": [
+                \"Temperature\",
+                \"Digital Temperature\",
+                \"Light\",
+                \"Pressure\",
+                \"Humidity\",
+                \"Motion\",
+                \"Audio P2P\",
+                \"Accelerometer x\",
+                \"Accelerometer y\",
+                \"Accelerometer z\"]}" }
     ].each do |attributes|
       DeviceType.create(attributes)
     end
     firefly_device_type = DeviceType.find_by_device_type("Firefly_v2")
-
 
     # populate Devices
     [{
@@ -152,70 +163,13 @@ namespace :db do
       bob_linux_agent.devices << d
     end
     firefly_device_1 = Device.find_by_uri("1.b19.device.sv.cmu.edu")
-
-    # populate Sensor Types
-    [{:property_type => "Temperature"},
-     {:property_type => "Digital Temperature"},
-     {:property_type => "Light"},
-     {:property_type => "Pressure"},
-     {:property_type => "Humidity"},
-     {:property_type => "Motion"},
-     {:property_type => "Audio P2P"},
-     {:property_type => "Accelerometer x"},
-     {:property_type => "Accelerometer y"},
-     {:property_type => "Accelerometer z"}
-    ].each do |attributes|
-      SensorType.create(attributes)
+    default_config_json = JSON.parse(firefly_device_type.default_config)
+    default_config_json["property_type"].each do |pt|
+        st = SensorType.create(:property_type => pt)
+        # create one sensor of this sensor-type
+        s = Sensor.create({ :uri => "d" || firefly_device_1.id  ||".sensor.b19.sv.cmu.edu", :sensor_type_id => st.id, :device_id => firefly_device_1.id })
+        firefly_device_1.sensors << s
     end
-    temperature_sensor_type = SensorType.find_by_property_type("Temperature")
-
-    # populate Sensors
-    [{
-         :uri => "1.sensor.b19.sv.cmu.edu",
-         :sensor_type_id => temperature_sensor_type.id,
-         :device_id => firefly_device_1.id,
-         :min_value => "",
-         :max_value => ""
-     },
-     {
-         :uri => "2.sensor.b19.sv.cmu.edu",
-         :sensor_type_id => temperature_sensor_type.id,
-         :device_id => firefly_device_1.id,
-         :min_value => "",
-         :max_value => ""
-     },
-     {
-         :uri => "3.sensor.b19.sv.cmu.edu",
-         :sensor_type_id => temperature_sensor_type.id,
-         :device_id => firefly_device_1.id,
-         :min_value => "",
-         :max_value => ""
-     },
-     {
-         :uri => "4.sensor.b19.sv.cmu.edu",
-         :sensor_type_id => temperature_sensor_type.id,
-         :device_id => firefly_device_1.id,
-         :min_value => "",
-         :max_value => "",
-     },
-     {
-         :uri => "5.sensor.b19.sv.cmu.edu",
-         :sensor_type_id => temperature_sensor_type.id,
-         :device_id => firefly_device_1.id,
-         :min_value => "",
-         :max_value => "",
-     },
-        {
-            :uri => "2310000c.sensor.b19.sv.cmu.edu",
-            :sensor_type_id => temperature_sensor_type.id,
-            :device_id => firefly_device_1.id,
-            :min_value => "",
-            :max_value => "",
-        }].each do |attributes|
-      s = Sensor.create(attributes)
-      firefly_device_1.sensors << s
-    end
-
   end
 
   def populate_conversions_table
