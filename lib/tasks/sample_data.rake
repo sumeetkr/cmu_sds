@@ -206,7 +206,7 @@ namespace :db do
          :max_value => "",
      },
         {
-            :uri => "23100016.sensor.b19.sv.cmu.edu",
+            :uri => "2310000c.sensor.b19.sv.cmu.edu",
             :sensor_type_id => temperature_sensor_type.id,
             :device_id => firefly_device_1.id,
             :min_value => "",
