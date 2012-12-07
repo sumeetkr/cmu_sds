@@ -12,17 +12,17 @@ SDS.chart = function() {
 SDS.chart.prototype = {
 
     drawChart: function() {
-        var startDate = $("#statDate").val();
-        var endDate = $("#endDate").val();
+        var startDate = $("#start_date").val();
+        var endDate = $("#end_date").val();
         var me = this;
         $("#chart").empty();
 
-        var startDateVal = $("#startDate").val().split("/");
+        var startDateVal = $("#start_date").val().split("/");
         if (startDateVal.length == 3) {
             var startDate = new Date(startDateVal[2], startDateVal[0] - 1, startDateVal[1]).valueOf();
         }
 
-        var endDateVal = $("#endDate").val().split("/");
+        var endDateVal = $("#end_date").val().split("/");
         if (endDateVal.length == 3) {
             var endDate = new Date(endDateVal[2], endDateVal[0] - 1, endDateVal[1]).valueOf();
         }
@@ -58,12 +58,12 @@ SDS.chart.prototype = {
 
     _drawLineChart: function(rawData) {
         var data = [];
-        var startDateVal = $("#startDate").val().split("/");
+        var startDateVal = $("#start_date").val().split("/");
         if (startDateVal.length == 3) {
             var startDate = new Date(startDateVal[2], startDateVal[0] - 1, startDateVal[1]).valueOf();
         }
 
-        var endDateVal = $("#endDate").val().split("/");
+        var endDateVal = $("#end_date").val().split("/");
         if (endDateVal.length == 3) {
             var endDate = new Date(endDateVal[2], endDateVal[0] - 1, endDateVal[1]).valueOf();
         }
