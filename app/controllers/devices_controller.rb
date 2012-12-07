@@ -16,6 +16,7 @@ class DevicesController < ApplicationController
             loc[:lat] = d.location.lat.nil? ? nil : d.location.lat
             loc[:lon] = d.location.lon.nil? ? nil : d.location.lon
             loc[:alt] = d.location.alt.nil? ? nil : d.location.alt
+            loc[:format] = d.location.format.nil? ? nil : d.location.format
           end
           Hash[
             :guid => d.guid,
@@ -31,8 +32,9 @@ class DevicesController < ApplicationController
     def new
         @location = Location.new
         @device_types = DeviceType.all
-        if (!params[:guid].blank? && !params[:device_type_id].blank?)   # && !params[:physical_location].nil? && !params[:network_address].nil?)
-            @device = Device.new(:guid => params[:guid], :device_type_id => params[:device_type_id])
+        @device_agents = DeviceAgent.all
+        if (!params[:uri].blank? && !params[:device_type_id].blank?)   # && !params[:physical_location].nil? && !params[:network_address].nil?)
+            @device = Device.new(:uri => params[:uri], :device_type_id => params[:device_type_id])
             @device.network_address = params[:network_address] unless params[:network_address].blank?
             @device.save
             #redirect_to devices_path
@@ -49,10 +51,18 @@ class DevicesController < ApplicationController
       @device = Device.new(params[:device])
         if @device.save
 
+          @location = Location.create({
+              :lat => params[:lat],
+              :lon => params[:lon],
+              :alt => params[:alt],
+              :format => params[:pos_fmt]
+            })
+          @device.location = @location
+
           # pre-populate sensors for firefly device
           if @device.device_type_id == "1"   # firefly_v2 has an id of 1
-            temp_device_guid = @device.guid
-            @device.guid = @device.id.to_s << "." << @device.guid << ".device.sv.cmu.edu"
+            temp_device_uri = @device.uri
+            @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
 
             # iterate through Sensor Types
             #dt = DeviceType.find_by_id(1)
@@ -74,13 +84,13 @@ class DevicesController < ApplicationController
               st = SensorType.find_by_property_type(pt)
               # create Sensor with this Sensor Type
               [{
-                   :guid => ".sensor.sv.cmu.edu",
+                   :uri => ".sensor.sv.cmu.edu",
                    :sensor_type_id => st.id,
-                   :device_guid => @device.guid,
+                   :uri => @device.uri,
                    :device_id => @device.id
                }].each do |attributes|
                 s = Sensor.create(attributes)
-                s.guid = s.id.to_s << "." << temp_device_guid << s.guid
+                s.uri = s.id.to_s << "." << temp_device_uri << s.uri
                 s.save
                 # add this Sensor to the Sensor Type
                 st.sensors << s
@@ -88,6 +98,7 @@ class DevicesController < ApplicationController
                 @device.sensors << s
               end
             end
+
             @device.save
           end
 
@@ -103,19 +114,32 @@ class DevicesController < ApplicationController
 
     def edit
         @device = Device.find(params[:id])
-        @location = Location.new
-        unless @device.location.nil?
-          @location = @device.location
-        end
+        @device.uri = @device.uri.sub(/#{@device.id}\./, '')
+        @device.uri = @device.uri.sub(/\.device\.sv\.cmu\.edu/, '')
+        @location = @device.location.nil? ? Location.new : @device.location
         @device_types = DeviceType.all
+        @device_agents = DeviceAgent.all
         @sensors = @device.sensors
     end
 
     def update
         @device = Device.find(params[:id])
+
+        device_agent = DeviceAgent.find_by_id(params[:device_agent_id])
+        @device.device_agents << device_agent unless @device.device_agents.include? device_agent
+        
         respond_to do |format|
             if @device.update_attributes(params[:device])
-                @device.guid = @device.id.to_s << "." << @device.guid << ".device.sv.cmu.edu"
+                @location = Location.create({
+                    :lat => params[:lat],
+                    :lon => params[:lon],
+                    :alt => params[:alt],
+                    :format => params[:pos_fmt]
+                  })
+                @device.location = @location
+                # @device.device_agents << params[:device_agent]
+                @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
+                @device.save
                 flash[:notice] = 'Device  was successfully updated.'
                 format.html { redirect_to :action => "index" }
                 format.json { head :no_content }

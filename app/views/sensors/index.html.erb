@@ -1,7 +1,7 @@
 <div class="container">
 <% @page_title = "| Sensors | List" %>
 
-<h1 style="text-align: left;">List of Sensor</h1>
+<h1 style="text-align: left;">List of Sensors</h1>
 
     <table class="table">
         <tr>
@@ -14,7 +14,7 @@
         <tr>
             <td><%= sensor.guid %></td>
             <td><%= sensor.sensor_type_id %></td>
-            <td><%= link_to sensor.device_guid, device_path(sensor.device) %></td>
+            <td><%= link_to sensor.device.uri, device_path(sensor.device) %></td>
             <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
             <td><%= link_to 'Delete', sensor, confirm: 'Are you sure?', method: :delete %></td>
         </tr>

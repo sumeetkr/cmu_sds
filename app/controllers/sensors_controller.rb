@@ -8,6 +8,7 @@ class SensorsController < ApplicationController
 
     def new
         @sensor_types = SensorType.all
+        @devices = Device.all
         @location = Location.new
         if (!params[:guid].blank? && !params[:device_id].blank?)
             @sensor = Sensor.new(:guid => params[:guid], :device_id => params[:device_id])
@@ -23,9 +24,9 @@ class SensorsController < ApplicationController
             @sensor.save
         else
             @sensor = Sensor.new
-
         end
     end
+
     def create
         @sensor = Sensor.new(params[:sensor])
         if @sensor.save
@@ -40,6 +41,7 @@ class SensorsController < ApplicationController
         @sensor = Sensor.find(params[:id])
         @location = @sensor.location
         @sensor_types = SensorType.all
+        @devices = Device.all
     end
 
     def update

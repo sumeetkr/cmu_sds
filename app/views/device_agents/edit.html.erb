@@ -3,5 +3,18 @@
 
 <h1 style="text-align: left;">Device Agent registration</h1>
 <%= render 'form' %>
+	<h2>Devices Using This Device Agent:</h2>
+		<table class="field" width="50%">
+		<thead>
+			<tr>
+				<td><u>Location</u></td>
+				<td><u>URI</u></td>
+		<% @devices.each do |d| %>
+			<tr>
+				<td><%= link_to d.print_name, edit_device_agent_path(d) %></td>
+				<td><%= link_to d.uri, edit_device_agent_path(d) %></td>
+			</tr>
+		<% end %>
+	</table><br />
 <%= link_to 'Back', devices_path %>
 </div>

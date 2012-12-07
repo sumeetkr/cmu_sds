@@ -8,6 +8,7 @@
             <td>guid</td>
             <td>network_address</td>
             <td>print_name</td>
+            <td>physical_location</td>
             <td colspan='2'>Actions</td>
         </tr>
         <% @device_agents.each do |device_agent| %>
@@ -15,6 +16,9 @@
             <td><%= device_agent.guid %></td>
             <td><%= device_agent.network_address %></td>
             <td><%= device_agent.print_name %></td>
+            <td><% unless device_agent.location.blank? %>
+                <%= "lat: #{device_agent.location.lat}" unless device_agent.location.lat.nil? %><%= ", lon: #{device_agent.location.lon}" unless device_agent.location.lon.nil? %><%= ", alt: #{device_agent.location.alt}" unless device_agent.location.alt.nil? %>
+            <% end %></td>
             <td><%= link_to 'Edit', edit_device_agent_path(device_agent) %></td>
             <td><%= link_to 'Delete', device_agent, confirm: 'Are you sure?', method: :delete %></td>
         </tr>

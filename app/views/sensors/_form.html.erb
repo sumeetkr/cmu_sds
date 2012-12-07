@@ -13,8 +13,8 @@
 
     <table>
       <tr>
-        <td class="field" width="50%"><%= f.label :guid %></td>
-        <td class="field"><%= f.text_field :guid %></td>
+        <td class="field" width="50%"><label for="device_uri" />URI</td>
+        <td class="field"><%= f.text_field :uri %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :sensor_type_id %></td>
@@ -30,11 +30,7 @@
       </tr>
       <tr>
         <td class="field"><%= f.label :device_guid %></td>
-        <td class="field"><%= f.text_field :device_guid %></td>
-      </tr>
-      <tr>
-        <td class="field"><%= f.label :device_id %></td>
-        <td class="field"><%= f.text_field :device_id %></td>
+        <td class="field"><%= f.select("device_guid", options = @devices.map { |d| [d.uri, d.id] }) %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :predecessor %></td>

@@ -3,6 +3,19 @@
 
 <h1 style="text-align: left;">Edit Device Information</h1>
 <%= render 'form' %>
+	<h2>Device Agents for this Device:</h2>
+		<table class="field" width="50%">
+		<thead>
+			<tr>
+				<td><u>Location</u></td>
+				<td><u>URI</u></td>
+		<% @device_agents.each do |da| %>
+			<tr>
+				<td><%= link_to da.print_name, edit_device_agent_path(da) %></td>
+				<td><%= link_to da.uri, edit_device_agent_path(da) %></td>
+			</tr>
+		<% end %>
+	</table><br />
 	<h2>Sensors for this device:</h2>
 		<table class="field" width="50%">
 		<thead>

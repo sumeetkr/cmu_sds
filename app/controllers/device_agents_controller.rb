@@ -30,6 +30,7 @@ class DeviceAgentsController < ApplicationController
     end
     def edit
         @device_agent = DeviceAgent.find(params[:id])
+        @devices = @device_agent.devices
     end
     def update
         @device_agent = DeviceAgent.find(params[:id])

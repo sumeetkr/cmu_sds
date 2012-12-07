@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207000407) do
+ActiveRecord::Schema.define(:version => 20121207032246) do
 
   create_table "conversions", :force => true do |t|
     t.integer  "device_type_id"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20121207000407) do
     t.string   "print_name"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "device_id"
     t.string   "device_guid"
     t.integer  "location_id"
     t.string   "guid"
@@ -62,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20121207000407) do
     t.datetime "updated_at",        :null => false
     t.string   "network_address"
     t.integer  "sensor_id"
-    t.integer  "device_agent_id"
     t.string   "device_agent_guid"
     t.string   "print_name"
     t.integer  "location_id"
@@ -110,9 +108,7 @@ ActiveRecord::Schema.define(:version => 20121207000407) do
     t.string   "device_guid"
     t.integer  "device_id",      :limit => 255
     t.string   "predecessor"
-    t.integer  "gps_coord_lat"
     t.integer  "gps_coord_long"
-    t.integer  "gps_coord_alt"
     t.integer  "location_id"
     t.string   "guid"
   end
