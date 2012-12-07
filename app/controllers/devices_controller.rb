@@ -60,26 +60,19 @@ class DevicesController < ApplicationController
           @device.location = @location
 
           # pre-populate sensors for firefly device
-          if @device.device_type_id == "1"   # firefly_v2 has an id of 1
+          # if @device.device_type_id == "1"   # firefly_v2 has an id of 1
+          if !(@device.device_type.default_config.blank?)
+
+            # get the sensor types to add by default for a device of this config
+            default_config_json = JSON.parse(@device.device_type.default_config)
+
+            # initialize the uri for this device
             temp_device_uri = @device.uri
             @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
 
-            # iterate through Sensor Types
-            #dt = DeviceType.find_by_id(1)
-            #default_sensor_config = JSON.parse(dt.default_config)
 
             # replace with property_type
-            ["Temperature",
-             "Digital Temperature",
-             "Light",
-             "Pressure",
-             "Humidity",
-             "Motion",
-             "Audio P2P",
-             "Accelerometer x",
-             "Accelerometer y",
-             "Accelerometer z"
-            ].each do |pt|
+            default_config_json["property_type"].each do |pt|
               # find Sensor type with property pt
               st = SensorType.find_by_property_type(pt)
               # create Sensor with this Sensor Type
@@ -127,7 +120,7 @@ class DevicesController < ApplicationController
 
         device_agent = DeviceAgent.find_by_id(params[:device_agent_id])
         @device.device_agents << device_agent unless @device.device_agents.include? device_agent
-        
+
         respond_to do |format|
             if @device.update_attributes(params[:device])
                 @location = Location.create({
