@@ -11,7 +11,12 @@ class SensorReadingsController < ApplicationController
     # It is not optimized like the query method.
     # I did not use query(..) because it requires a hash_value
     @sensor_reading_table.items.each do |reading|
-      process_reading(json_array, reading)
+      run_conversions(reading)
+      json_array << {
+          :id => id,
+          :temp => reading.attributes["temp"],
+          :timestamp => reading.attributes["timestamp"]
+      }
     end
 
     render :json => json_array
@@ -19,23 +24,61 @@ class SensorReadingsController < ApplicationController
 
   def show
     id = params[:id]
+    start_time = params[:start_time].to_i
+    end_time = params[:end_time].to_i
+    number_of_tuples = params[:tuples].to_i
+
+    if end_time > 0
+      # The query method requires a hash_value
+      readings = @sensor_reading_table.items.query(
+          :hash_value => id,
+          :range_value => start_time..end_time,
+          :select => [:id, :temp, :timestamp])
+    else
+      readings = @sensor_reading_table.items.query(
+          :hash_value => id,
+          :select => [:id, :temp, :timestamp])
+    end
+
+    # Convert the Enumerator to an Array so that we can index into it.
+    # Enumerator.find(id) returns another Enumerator that does not
+    # have the expected 'attributes' hash
+    readings = readings.to_a
+
+    readings.each do |reading|
+      run_conversions(reading)
+    end
+
     json_array = []
 
-    if !params[:startTime].blank? && !params[:endTime].blank?
-      startTime = params[:startTime].to_i
-      endTime = params[:endTime].to_i
-      # The query method requires a hash_value
-      @sensor_reading_table.items.query(
-          :hash_value => id,
-          :range_value => startTime..endTime,
-          :select => [:id, :temp, :timestamp]).each do |reading|
-        process_reading(json_array, reading)
+    if number_of_tuples > 0
+      number_of_readings = readings.count
+      readings_per_tuple = (number_of_readings / number_of_tuples).to_i
+      if readings_per_tuple > 0
+        number_of_tuples.times do |tuple_index|
+          start_index = tuple_index * readings_per_tuple
+          end_index = start_index + readings_per_tuple
+          tuple_readings = readings[start_index..end_index]
+          tuple_timestamps = tuple_readings.collect { |r| r.attributes["timestamp"] }
+          tuple_temp_readings = tuple_readings.collect { |r| r.attributes["temp"] }
+          json_array << {
+              :id => id,
+              :average_timestamp => tuple_timestamps.average,
+              :first => tuple_temp_readings.first,
+              :last => tuple_temp_readings.last,
+              :min => tuple_temp_readings.min,
+              :max => tuple_temp_readings.max,
+              :average => tuple_temp_readings.average
+          }
+        end
       end
     else
-      @sensor_reading_table.items.query(
-          :hash_value => id,
-          :select => [:id, :temp, :timestamp]).each do |reading|
-        process_reading(json_array, reading)
+      readings.each do |reading|
+        json_array << {
+            :id => id,
+            :temp => reading.attributes["temp"],
+            :timestamp => reading.attributes["timestamp"]
+        }
       end
     end
 
@@ -65,11 +108,6 @@ class SensorReadingsController < ApplicationController
 
   private
 
-  def process_reading(json_array, reading)
-    run_conversions(reading)
-    json_array << convert_reading_to_json(reading)
-  end
-
   def run_conversions(reading)
     ["temp"].each do |type|
       value = reading.attributes[type]
@@ -84,13 +122,6 @@ class SensorReadingsController < ApplicationController
     a = conversion.a
     b = conversion.b
     return a * x + b
-  end
-
-  def convert_reading_to_json(reading)
-    {:id => reading.attributes["id"],
-     :temp => reading.attributes["temp"],
-     :timestamp => reading.attributes["timestamp"]
-    }
   end
 
 end
