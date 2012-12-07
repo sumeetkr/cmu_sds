@@ -13,8 +13,12 @@
 
     <table>
       <tr>
-        <td class="field" width="50%"><label for="device_uri" />URI</td>
-        <td class="field"><%= f.text_field :uri %> <span>.device.sv.cmu.edu</span></td>
+        <td class="field" width="50%"><label for="guid" />GUID</td>
+        <td class="field"><%= f.text_field :guid,:readonly => true %></td>
+      </tr>
+      <tr>
+        <td class="field"><label for="device_uri" />URI</td>
+        <td class="field"><%= f.text_field :uri %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :device_type_id %></td>
@@ -24,7 +28,7 @@
         <td class="field"><%= f.label :device_agent_id %></td>
         <td class="field">
           <select name="device_agent_id">
-            <% @device_agents.each do |da|%>    
+            <% @device_agents.each do |da|%>
                 <option value="<%=da.id%>"><%=da.print_name%></option>
             <% end %>
           </select>

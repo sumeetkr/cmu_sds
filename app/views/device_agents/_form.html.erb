@@ -13,7 +13,11 @@
     <table>
       <tr>
         <td class="field" width="50%"><%= f.label :guid %></td>
-        <td class="field"><%= f.text_field :guid %></td>
+        <td class="field"><%= f.text_field :guid,:readonly => true %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label :uri %></td>
+        <td class="field"><%= f.text_field :uri %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :network_address %></td>

@@ -66,9 +66,10 @@ class DevicesController < ApplicationController
             # get the sensor types to add by default for a device of this config
             default_config_json = JSON.parse(@device.device_type.default_config)
 
-            # initialize the uri for this device
-            temp_device_uri = @device.uri
-            @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
+            # initialize the uri for this device (only for sensor creation)
+            temp_device_uri  = @device.uri.sub(/#{@device.id}\./, '')
+            temp_device_uri = temp_device_uri.sub(/\.device\.sv\.cmu\.edu/, '')
+            # @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
 
 
             # replace with property_type
@@ -91,7 +92,6 @@ class DevicesController < ApplicationController
                 @device.sensors << s
               end
             end
-
             @device.save
           end
 
@@ -107,8 +107,8 @@ class DevicesController < ApplicationController
 
     def edit
         @device = Device.find(params[:id])
-        @device.uri = @device.uri.sub(/#{@device.id}\./, '')
-        @device.uri = @device.uri.sub(/\.device\.sv\.cmu\.edu/, '')
+        # @device.uri = @device.uri.sub(/#{@device.id}\./, '')
+        # @device.uri = @device.uri.sub(/\.device\.sv\.cmu\.edu/, '')
         @location = @device.location.nil? ? Location.new : @device.location
         @device_types = DeviceType.all
         @device_agents = DeviceAgent.all
@@ -131,7 +131,7 @@ class DevicesController < ApplicationController
                   })
                 @device.location = @location
                 # @device.device_agents << params[:device_agent]
-                @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
+                # @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
                 @device.save
                 flash[:notice] = 'Device  was successfully updated.'
                 format.html { redirect_to :action => "index" }

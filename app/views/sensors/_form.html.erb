@@ -13,8 +13,8 @@
 
     <table>
       <tr>
-        <td class="field" width="50%"><label for="device_uri" />URI</td>
-        <td class="field"><%= f.text_field :uri %></td>
+        <td class="field" width="50%"><label for="guid" />GUID</td>
+        <td class="field"><%= f.text_field :guid,:readonly => true %></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :sensor_type_id %></td>
