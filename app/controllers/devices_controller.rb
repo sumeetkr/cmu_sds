@@ -26,7 +26,7 @@ class DevicesController < ApplicationController
             :sensors => d.sensors.collect{|s| Hash[s.guid => s.sensor_type.property_type]}
           ]
         }
-        respond_with device_hash
+        render :json => device_hash
     end
 
     def new
