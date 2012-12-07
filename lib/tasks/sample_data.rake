@@ -53,7 +53,7 @@ namespace :db do
     db = AWS::DynamoDB.new
     dynamodb_tables = {}
 
-    sensor_readings_table_name = "SensorReadingV3"
+    sensor_readings_table_name = "SensorReadingsV4"
 
     {
         sensor_readings_table_name => {
@@ -78,12 +78,12 @@ namespace :db do
     print dynamodb_tables[sensor_readings_table_name]
 
 
-    id =3
+    id =1
     timestamp = 1353446211000
     temp = 290
     increment = 10
 
-    1000.times do
+    100.times do
 
       readings = []
       increment = -1 * increment
@@ -217,7 +217,7 @@ namespace :db do
          :gps_coord_alt => ""
      },
      {
-         :guid => "5.sensor.b19.sv.cmu.edu",
+         :guid => "23100016.sensor.b19.sv.cmu.edu",
          :sensor_type_id => temperature_sensor_type.id,
          :device_guid => firefly_device_1.guid,
          :device_id => firefly_device_1.id,
