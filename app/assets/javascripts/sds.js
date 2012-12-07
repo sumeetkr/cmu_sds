@@ -37,10 +37,10 @@ SDS.chart.prototype = {
 
         var url = "/sensor_readings/" + sensorId + "?1=1";
         if (startDate) {
-            url += "&startTime=" + startDate;
+            url += "&start_time=" + startDate;
         }
         if (endDate) {
-            url += "&endTime=" + endDate;
+            url += "&end_time=" + endDate;
         }
 
         $.ajax({
