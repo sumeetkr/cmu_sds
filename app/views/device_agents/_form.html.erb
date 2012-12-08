@@ -13,7 +13,7 @@
     <table>
       <tr>
         <td class="field" width="50%"><%= f.label :guid %></td>
-        <td class="field"><%= f.text_field :guid,:readonly => true %></td>
+        <td class="field"><%= f.text_field :guid,:readonly => true %> <span>auto-generated</span></td>
       </tr>
       <tr>
         <td class="field"><%= f.label :uri %></td>
@@ -37,3 +37,18 @@
       </tr>
     </table>
 <% end %>
+
+<section class="intro clearfix">
+    <div class="limiter">
+        <div class="item">
+          <a href="#">
+            <h3>TODOs:</h3>
+            <p>
+                <ul>
+                    <li>Add a field for "polling interval". This indicates how often the device agent will poll/push data to the database. Either enter an interval, cron job or provide a dropdown for which script to execute for the polling.</li>
+                </ul>
+            </p>
+          </a>
+        </div>
+    </div>
+</section>

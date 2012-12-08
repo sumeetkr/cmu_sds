@@ -14,7 +14,7 @@
     <table>
       <tr>
         <td class="field" width="50%"><label for="guid" />GUID</td>
-        <td class="field"><%= f.text_field :guid,:readonly => true %></td>
+        <td class="field"><%= f.text_field :guid,:readonly => true %> <span>auto-generated</span></td>
       </tr>
       <tr>
         <td class="field"><label for="device_uri" />URI</td>
@@ -68,3 +68,22 @@
       </tr>
     </table>
 <% end %>
+
+<section class="intro clearfix">
+    <div class="limiter">
+        <div class="item">
+          <a href="#">
+            <h3>TODOs:</h3>
+            <p>
+                <ul>
+                    <li>Network address e.g. 231000003</li>
+                    <li>When providing GPS coordinates, provide a way to enter free form text in the various popular formats. Parse it in the backend to appropriate coordinates.e.g. Deg, Min, Second or just Deg etc.</li>
+                    <li>The conversion mentioned above is from the manufacturer's documentation. If a general conversion is preferred like deg C to deg F, create a virtual sensor as a wrapper to this.</li>
+                    <li>Add a check to see if uri is unique (from database)</li>
+                </ul>
+            </p>
+          </a>
+        </div>
+    </div>
+</section>
+
