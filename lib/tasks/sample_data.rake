@@ -167,7 +167,7 @@ namespace :db do
     default_config_json["property_type"].each do |pt|
         st = SensorType.create(:property_type => pt)
         # create one sensor of this sensor-type
-        s = Sensor.create({ :uri => "d" || firefly_device_1.id  ||".sensor.b19.sv.cmu.edu", :sensor_type_id => st.id, :device_id => firefly_device_1.id })
+        s = Sensor.create({ :uri => "d" || firefly_device_1.id  ||".sensor.b19.sv.cmu.edu", :sensor_type_id => st.id, :device_id => firefly_device_1.id, :frequency => 1 })
         firefly_device_1.sensors << s
     end
   end

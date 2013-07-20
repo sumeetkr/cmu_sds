@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207032246) do
+ActiveRecord::Schema.define(:version => 20130720010236) do
 
   create_table "conversions", :force => true do |t|
     t.integer  "device_type_id"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20121207032246) do
     t.integer  "gps_coord_long"
     t.integer  "location_id"
     t.string   "guid"
+    t.integer  "frequency"
   end
 
   create_table "users", :force => true do |t|
