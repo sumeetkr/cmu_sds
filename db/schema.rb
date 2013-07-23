@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130720010236) do
+ActiveRecord::Schema.define(:version => 20130723070439) do
 
   create_table "conversions", :force => true do |t|
     t.integer  "device_type_id"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20130720010236) do
     t.string   "metadata_json"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.text   "default_config", :limit => nil
+    t.text     "default_config"
   end
 
   create_table "devices", :force => true do |t|
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20130720010236) do
     t.string   "print_name"
     t.integer  "location_id"
     t.string   "guid"
+    t.text     "config"
   end
 
   create_table "locations", :force => true do |t|

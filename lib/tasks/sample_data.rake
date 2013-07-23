@@ -157,6 +157,13 @@ namespace :db do
          # :device_type_id => firefly_device_type.id,
          :network_address => "192.168.1.1",
          :print_name => "Building 19 - Room 1055"
+     },
+     {
+         :uri => "236b404cead3dbee",
+         # :device_type_id => firefly_device_type.id,
+         :network_address => "192.168.1.2",
+         :print_name => "Sumeets Test device",
+         :config =>"{\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"37691\" }"
      }].each do |attributes|
       d = Device.create(attributes)
       firefly_device_type.devices << d

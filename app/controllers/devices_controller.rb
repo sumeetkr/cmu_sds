@@ -177,13 +177,14 @@ class DevicesController < ApplicationController
     render :json => device_hash
   end
 
-  def get_config
-    d = Device.find(params[:id])
+  def get_config_by_uri
+    d = Device.find_by_uri(params[:uri])
     device_hash =
         Hash[
             :guid => d.guid,
             :uri => d.uri,
             :print_name => d.print_name,
+            :config => d.config,
             :sensors => d.sensors.collect{|s| Hash[s.guid => s.frequency]}
         ]
     render :json => device_hash
