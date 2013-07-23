@@ -139,11 +139,25 @@ namespace :db do
                 \"Audio P2P\",
                 \"Accelerometer x\",
                 \"Accelerometer y\",
+                \"Accelerometer z\"]}" },
+        {:device_type => "Electric_Imp", :version => "1", :manufacturer => "Spark Fun",
+         :default_config =>
+             "{\"property_type\": [
+                \"Temperature\",
+                \"Digital Temperature\",
+                \"Light\",
+                \"Pressure\",
+                \"Humidity\",
+                \"Motion\",
+                \"Audio P2P\",
+                \"Accelerometer x\",
+                \"Accelerometer y\",
                 \"Accelerometer z\"]}" }
     ].each do |attributes|
       DeviceType.create(attributes)
     end
     firefly_device_type = DeviceType.find_by_device_type("Firefly_v2")
+    electric_imp_device_type = DeviceType.find_by_device_type("Electric_Imp")
 
     # populate Devices
     [{
@@ -164,20 +178,18 @@ namespace :db do
          :network_address => "192.168.1.2",
          :print_name => "Sumeets Test device",
          :url => "https://agent.electricimp.com/kDj8hNXXSb79",
-         :config =>"{\"frequency\": \"2\",\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"38549\" ,
-                    \"pressure_feed_id\": \"38550\" , \"motion_feed_id\": \"38551\" , \"humidity_feed_id\": \"38552\" , \"x_acceleration_feed_id\": \"38553\",
-                    \"y_acceleration_feed_id\": \"38554\" , \"z_acceleration_feed_id\": \"38555\" , \"light_feed_id\": \"38556\" , \"microphone_feed_id\": \"38557\"}"
-    #local pressure_feed_id;
-    #local motion_feed_id;
-    #local humidity_feed_id;
-    #local x_acceleration_feed_id;
-    #local y_acceleration_feed_id;
-    #local z_acceleration_feed_id;
-    #local light_feed_id;
-    #local microphone_feed_id;
+         :config =>"{\"frequency\": \"2\",\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"38549\" ,\"pressure_feed_id\": \"38550\" , \"motion_feed_id\": \"38551\" , \"humidity_feed_id\": \"38552\" , \"x_acceleration_feed_id\": \"38553\",\"y_acceleration_feed_id\": \"38554\" , \"z_acceleration_feed_id\": \"38555\" , \"light_feed_id\": \"38556\" , \"microphone_feed_id\": \"38557\"}"
+     },
+     {
+         :uri => "2360a83643fc42ee",
+         # :device_type_id => firefly_device_type.id,
+         :network_address => "192.168.1.2",
+         :print_name => "Test device",
+         :url => "https://agent.electricimp.com/-Hhrv_1fl3zZ",
+         :config =>"{\"frequency\": \"10\",\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"38549\" ,\"pressure_feed_id\": \"38550\" , \"motion_feed_id\": \"38551\" , \"humidity_feed_id\": \"38552\" , \"x_acceleration_feed_id\": \"38553\",\"y_acceleration_feed_id\": \"38554\" , \"z_acceleration_feed_id\": \"38555\" , \"light_feed_id\": \"38556\" , \"microphone_feed_id\": \"38557\"}"
      }].each do |attributes|
       d = Device.create(attributes)
-      firefly_device_type.devices << d
+      electric_imp_device_type.devices << d
       bob_linux_agent.devices << d
     end
     firefly_device_1 = Device.find_by_uri("1.b19.device.sv.cmu.edu")

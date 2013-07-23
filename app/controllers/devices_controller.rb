@@ -133,6 +133,7 @@ class DevicesController < ApplicationController
         # @device.device_agents << params[:device_agent]
         # @device.uri = @device.id.to_s << "." << @device.uri << ".device.sv.cmu.edu"
         @device.save
+        ask_device_to_update(@device)
         flash[:notice] = 'Device  was successfully updated.'
         format.html { redirect_to :action => "index" }
         format.json { head :no_content }
@@ -179,6 +180,23 @@ class DevicesController < ApplicationController
 
   def get_config_by_uri
     d = Device.find_by_uri(params[:id])
+    device_hash = get_device_config_json(d)
+    render :json => device_hash
+  end
+
+  def ask_device_to_update( device )
+    begin
+      @result = HTTParty.post(device.url.to_str,
+                              :body => get_device_config_json(device).to_json,
+                              :headers => { 'Content-Type' => 'application/json' } )
+    rescue Exception=>e
+      # handle e
+    end
+
+    puts "got"
+  end
+
+  def get_device_config_json(d)
     device_hash =
         Hash[
             :guid => d.guid,
@@ -187,7 +205,8 @@ class DevicesController < ApplicationController
             :config => d.config,
             :sensors => d.sensors.collect{|s| Hash[s.guid => s.frequency]}
         ]
-    render :json => device_hash
+
+    return device_hash
   end
 end
 

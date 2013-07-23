@@ -241,6 +241,7 @@ DEPENDENCIES
   guard-rspec
   guard-spork
   heroku
+  httparty
   jquery-rails
   launchy
   pg (= 0.12.2)
