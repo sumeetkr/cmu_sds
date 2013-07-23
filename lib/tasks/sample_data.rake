@@ -163,7 +163,17 @@ namespace :db do
          # :device_type_id => firefly_device_type.id,
          :network_address => "192.168.1.2",
          :print_name => "Sumeets Test device",
-         :config =>"{\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"37691\" }"
+         :config =>"{\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"38549\" ,
+                    \"pressure_feed_id\": \"38550\" , \"motion_feed_id\": \"38551\" , \"humidity_feed_id\": \"38552\ , \"x_acceleration_feed_id\": \"38553\"
+                    \"y_acceleration_feed_id\": \"38554\" , \"z_acceleration_feed_id\": \"38555\" , \"light_feed_id\": \"38556\ , \"microphone_feed_id\": \"38557\"}"
+    #local pressure_feed_id;
+    #local motion_feed_id;
+    #local humidity_feed_id;
+    #local x_acceleration_feed_id;
+    #local y_acceleration_feed_id;
+    #local z_acceleration_feed_id;
+    #local light_feed_id;
+    #local microphone_feed_id;
      }].each do |attributes|
       d = Device.create(attributes)
       firefly_device_type.devices << d
