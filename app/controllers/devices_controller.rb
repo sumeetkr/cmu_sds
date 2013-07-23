@@ -178,7 +178,7 @@ class DevicesController < ApplicationController
   end
 
   def get_config_by_uri
-    d = Device.find_by_uri(params[:uri])
+    d = Device.find_by_uri(params[:id])
     device_hash =
         Hash[
             :guid => d.guid,
