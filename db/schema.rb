@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20130720010236) do
     t.string   "metadata_json"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.string   "default_config"
+    t.text   "default_config", :limit => nil
   end
 
   create_table "devices", :force => true do |t|
