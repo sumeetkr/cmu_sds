@@ -4,7 +4,7 @@ class CreateDeviceTypes < ActiveRecord::Migration
         t.string :type
         t.string :version
         t.string :manufacturer
-        t.text :metadata, :limit => nil
+        t.string :metadata, :limit => 1024
         t.timestamps
     end
 
