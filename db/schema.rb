@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723070439) do
+ActiveRecord::Schema.define(:version => 20130723171601) do
 
   create_table "conversions", :force => true do |t|
     t.integer  "device_type_id"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20130723070439) do
     t.integer  "location_id"
     t.string   "guid"
     t.text     "config"
+    t.string   "url"
   end
 
   create_table "locations", :force => true do |t|

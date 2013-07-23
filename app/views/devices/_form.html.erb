@@ -59,6 +59,31 @@
           </select>
         </td>
       </tr>
+        <td class="field"><label for="device_url" />URL</td>
+        <td class="field"><%= f.text_field :url %></td>
+      </tr>
+      <tr>
+        <td class="field" width="50%"><%= f.label :config %></td>
+        <td class="field"><%= f.text_area   :config, :rows => '10',
+                                            :placeholder => "{\"frequency\": \"1\",\"post_url\": \"http://api.sen.se/events/?sense_key=RMSHIf10oCKD22_NINkGsg\", \"temp_feed_id\": \"38549\" ,
+                              \"pressure_feed_id\": \"38550\" , \"motion_feed_id\": \"38551\" , \"humidity_feed_id\": \"38552\" , \"x_acceleration_feed_id\": \"38553\",
+                              \"y_acceleration_feed_id\": \"38554\" , \"z_acceleration_feed_id\": \"38555\" , \"light_feed_id\": \"38556\" , \"microphone_feed_id\": \"38557\"}"
+        %></td>
+        <!--
+           sample json for Firefly config
+            {"property_type": [
+           "Temperature",
+           "Digital Temperature",
+           "Light",
+           "Pressure",
+           "Humidity",
+           "Motion",
+           "Audio P2P",
+           "Accelerometer x",
+           "Accelerometer y",
+           "Accelerometer z"]}
+        -->
+      </tr>
       <tr>
         <td style="text-align: right;" colspan="2">
             <div class="actions">
